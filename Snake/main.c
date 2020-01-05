@@ -14,8 +14,8 @@
 #include <termios.h>
 #include <fcntl.h>
 
-// Windows Åc Linux µÄº¯Ê½ìÃû·QÉÔÎ¢²»Í¬¡£
-#define Sleep(msec) usleep(msec * 1000); // ²»Ö§Ô® s
+// Windows èˆ‡ Linux çš„å‡½å¼åº«åç¨±ç¨å¾®ä¸åŒã€‚
+#define Sleep(msec) usleep(msec * 1000); // ä¸æ”¯æ´ s
 #define _getch() getc(stdin)
 
 // thanks to https://cboard.cprogramming.com/c-programming/63166-kbhit-linux.html
@@ -50,18 +50,18 @@ int _kbhit(void)
 
 double timePerFrame;
 int numberOfRow = 12, numberOfColumn = 12;
-int pulse = 0; //¿ØÖÆ¶¹¶¹oO
+int pulse = 0; //æ§åˆ¶è±†è±†oO
 
 double accelerate(int length);
-int keyToQuaternary(char input, int quaternaryVector, int length); //½«ÓÃ»§¼üÅÌÊäÈëµÄÖµ·­ÒëÎª·½ÏòÖµ
-void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn); //½«·½ÏòÖµÓëĞĞÁĞÎ»ÖÃ±ä»¯¶ÔÓ¦
-char coreToScreen(int number, int length, int quaternaryVector); //½«coreÊı×éÖĞ´æ´¢µÄºËĞÄÊı¾İ¿ÉÊÓ»¯
+int keyToQuaternary(char input, int quaternaryVector, int length); //å°†ç”¨æˆ·é”®ç›˜è¾“å…¥çš„å€¼ç¿»è¯‘ä¸ºæ–¹å‘å€¼
+void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn); //å°†æ–¹å‘å€¼ä¸è¡Œåˆ—ä½ç½®å˜åŒ–å¯¹åº”
+char coreToScreen(int number, int length, int quaternaryVector); //å°†coreæ•°ç»„ä¸­å­˜å‚¨çš„æ ¸å¿ƒæ•°æ®å¯è§†åŒ–
 
 int main() {
-    /*´´½¨Ëæ»úÊıÖÖ×Ó*/
+    /*åˆ›å»ºéšæœºæ•°ç§å­*/
     srand((unsigned)time(NULL));
 
-    /*Êı¾İÔ¤´¦Àí*/
+    /*æ•°æ®é¢„å¤„ç†*/
     int core[LENGTH + 2][LENGTH + 2] = { 0 };
     char screen[2 * (LENGTH + 2) + 1][2 * (LENGTH + 2) + 1] = { 0 };
     int currentRow = numberOfRow / 2 + 1, currentColumn = numberOfColumn / 2 + 1;
@@ -69,24 +69,24 @@ int main() {
     int length = 1;
     bool judgeSeed = false;
 
-    /*ÆåÅÌÔ¤´¦Àí*/
+    /*æ£‹ç›˜é¢„å¤„ç†*/
     for (int i = 0; i < numberOfRow + 2; i++) {
-        if (i == 0 || i == numberOfRow + 1) //ÔÚÊ×ĞĞºÍÄ©ĞĞÈ«ÖÃÈë'#'
+        if (i == 0 || i == numberOfRow + 1) //åœ¨é¦–è¡Œå’Œæœ«è¡Œå…¨ç½®å…¥'#'
             for (int j = 0; j < numberOfColumn + 2; j++)
                 core[i][j] = 666;
-        else //ÔÚÆäËüĞĞµÄ¿ªÊ¼ÓëÄ©Î²ÖÃÈë'#'
+        else //åœ¨å…¶å®ƒè¡Œçš„å¼€å§‹ä¸æœ«å°¾ç½®å…¥'#'
             for (int j = 0; j < numberOfColumn + 2; j++)
                 if (j == 0 || j == numberOfColumn + 1)
                     core[i][j] = 666;
     }
 
     while (true) {
-        /*¼ì²âÓÃ»§¼üÅÌÊäÈë£¬²¢ÓÉÊäÈë¸ø³öÉßÍ·ÏÂÒ»²½ÒÆ¶¯µÄÎ»ÖÃ*/
+        /*æ£€æµ‹ç”¨æˆ·é”®ç›˜è¾“å…¥ï¼Œå¹¶ç”±è¾“å…¥ç»™å‡ºè›‡å¤´ä¸‹ä¸€æ­¥ç§»åŠ¨çš„ä½ç½®*/
         if (_kbhit())
             quaternaryVector = keyToQuaternary(_getch(), quaternaryVector, length);
         quaternaryVectorInterpreter(quaternaryVector, &currentRow, &currentColumn);
 
-        /*¡°Ì½Õë¡±Ì½²âÏÂÒ»¸öÒÆ¶¯Î»ÖÃµÄÇé¿ö*/
+        /*â€œæ¢é’ˆâ€æ¢æµ‹ä¸‹ä¸€ä¸ªç§»åŠ¨ä½ç½®çš„æƒ…å†µ*/
         if (core[currentRow][currentColumn] == 777) {
             ++length;
             judgeSeed = false;
@@ -94,7 +94,7 @@ int main() {
         else if (core[currentRow][currentColumn] != 0)
             break;
 
-        /*ÉßÒÆ¶¯Ä£¿é*/
+        /*è›‡ç§»åŠ¨æ¨¡å—*/
         for (int i = 1; i <= numberOfRow; i++) {
             for (int j = 1; j <= numberOfColumn; j++)
                 if (core[i][j] != 0 && core[i][j] != 777) {
@@ -105,7 +105,7 @@ int main() {
         }
         core[currentRow][currentColumn] = 1;
 
-        /*Ëæ»ú·ÅÖÃÌ°³ÔÉßÊ³Îï£¬Ñ­»·Ö±µ½Ê³Îï²»Î»ÓÚÉßÉíÉÏÎªÖ¹*/
+        /*éšæœºæ”¾ç½®è´ªåƒè›‡é£Ÿç‰©ï¼Œå¾ªç¯ç›´åˆ°é£Ÿç‰©ä¸ä½äºè›‡èº«ä¸Šä¸ºæ­¢*/
         while (judgeSeed == false) {
             int tempRow = rand() % numberOfRow + 1;
             int tempColumn = rand() % numberOfColumn + 1;
@@ -115,21 +115,21 @@ int main() {
             }
         }
 
-        /*½«ÒªÊä³öµÄÊı¾İÍ³Ò»·ÅÖÁscreen[][]*/
+        /*å°†è¦è¾“å‡ºçš„æ•°æ®ç»Ÿä¸€æ”¾è‡³screen[][]*/
         for (int i = 0; i < numberOfRow + 2; i++) {
             for (int j = 0; j < numberOfColumn + 2; j++) {
                 screen[i][2 * j] = coreToScreen(core[i][j], length, quaternaryVector);
-                screen[i][2 * j + 1] = ' '; //×¢Òâ£¬ÎªÁËÊä³öÃÀ¹Û£¬¿¼ÂÇµ½×Ö·ûËùÕ¼ÏñËØ£¬¹ÊÔÚÃ¿Ò»¸öÔªËØºó¼ÓÒ»¸ö¿Õ¸ñ
+                screen[i][2 * j + 1] = ' '; //æ³¨æ„ï¼Œä¸ºäº†è¾“å‡ºç¾è§‚ï¼Œè€ƒè™‘åˆ°å­—ç¬¦æ‰€å åƒç´ ï¼Œæ•…åœ¨æ¯ä¸€ä¸ªå…ƒç´ ååŠ ä¸€ä¸ªç©ºæ ¼
             }
             screen[i][2 * (numberOfColumn + 1) + 1] = '\n';
         }
 
-        /*¸¨ÖúÊı¾İ*/
+        /*è¾…åŠ©æ•°æ®*/
         // multiple unsequenced modifications to 'pulse'
         pulse++;
         pulse %= 2;
 
-        /*Í³Ò»Êä³ö*/
+        /*ç»Ÿä¸€è¾“å‡º*/
 #ifdef _WIN32
         system("cls");
 #else
@@ -142,7 +142,7 @@ int main() {
         Sleep(timePerFrame);
     }
 
-    /*ÔÚ½áÊøÓÎÏ·ºóÏÔÊ¾ÊäÓ®*/
+    /*åœ¨ç»“æŸæ¸¸æˆåæ˜¾ç¤ºè¾“èµ¢*/
     if (length != numberOfRow * numberOfColumn) {
         screen[numberOfRow / 2][numberOfColumn - 1] = 'G';
         screen[numberOfRow / 2][numberOfColumn] = 'A';
@@ -201,7 +201,7 @@ char coreToScreen(int number, int length, int quaternaryVector) {
         if (number != 1)
             return '*';
         else
-            switch (quaternaryVector) { //²»Í¬·½ÏòµÄÉßÍ·
+            switch (quaternaryVector) { //ä¸åŒæ–¹å‘çš„è›‡å¤´
             case 0:
                 return '>';
             case 1:
@@ -232,7 +232,7 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
         temp = 2;
     else if (input == 'S' || input == 's')
         temp = 3;
-    if (length > 1) //µ±Éß³¤´óÓÚ1Ê±£¬ÉßÍ·²»¿ÉÖ±½Ó·´Ïò
+    if (length > 1) //å½“è›‡é•¿å¤§äº1æ—¶ï¼Œè›‡å¤´ä¸å¯ç›´æ¥åå‘
         if ((quaternaryVector - temp) % 2 == 0)
             return quaternaryVector;
     return temp;
