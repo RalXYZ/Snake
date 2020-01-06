@@ -121,7 +121,7 @@ int main() {
 	for (int i = 0; i < numberOfRow + 2; i++)
 		printf("%s", screen[i]);
 	printf("Your final length is: %d\n", length);
-	Sleep(10000);
+	Sleep(9000);
 	return 0;
 }
 
