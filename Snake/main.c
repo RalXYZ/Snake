@@ -132,16 +132,16 @@ double accelerate(int length) {
 void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn) {
 	switch (quaternaryVector) {
 	case 0:
-		++ * currentColumn;
+		++(*currentColumn);
 		break;
 	case 2:
-		-- * currentColumn;
+		--(*currentColumn);
 		break;
 	case 1:
-		-- * currentRow;
+		--(*currentRow);
 		break;
 	case 3:
-		++ * currentRow;
+		++(*currentRow);
 		break;
 	}
 }
