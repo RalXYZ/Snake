@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <stdbool.h>
 #include "system.h"
+#include "utilities.h"
 
 #define LENGTH 40
 
@@ -89,11 +90,7 @@ int main() {
 		pulse %= 2;
 
 		/*统一输出*/
-#ifdef _WIN32
-		system("cls");
-#else
-		printf("\x1b[2J");
-#endif
+		clearScreen();
 		for (int i = 0; i < numberOfRow + 2; i++)
 			printf("%s", screen[i]);
 		printf("Your current length is: %d\n", length);
@@ -120,11 +117,7 @@ int main() {
 		screen[numberOfRow / 2 + 1][numberOfColumn] = 'I';
 		screen[numberOfRow / 2 + 1][numberOfColumn + 1] = 'N';
 	}
-#ifdef _WIN32
-	system("cls");
-#else
-	printf("\x1b[2J");
-#endif
+	clearScreen();
 	for (int i = 0; i < numberOfRow + 2; i++)
 		printf("%s", screen[i]);
 	printf("Your final length is: %d\n", length);
