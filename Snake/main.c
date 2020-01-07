@@ -176,14 +176,20 @@ char coreToScreen(int number, int length, int quaternaryVector) {
 
 int keyToQuaternary(char input, int quaternaryVector, int length) {
 	int temp = quaternaryVector;
-	if (input == 'D' || input == 'd')
-		temp = 0;
-	else if (input == 'W' || input == 'w')
-		temp = 1;
-	else if (input == 'A' || input == 'a')
-		temp = 2;
-	else if (input == 'S' || input == 's')
-		temp = 3;
+	switch (input) {
+		case 'D': case 'd':
+			temp = 0;
+			break;
+		case 'W': case 'w':
+			temp = 1;
+			break;
+		case 'A': case 'a':
+			temp = 2;
+			break;
+		case 'S': case 's':
+			temp = 3;
+			break;
+	}
 	if (length > 1) //当蛇长大于1时，蛇头不可直接反向
 		if ((quaternaryVector - temp) % 2 == 0)
 			return quaternaryVector;
