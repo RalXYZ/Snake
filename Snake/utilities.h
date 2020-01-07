@@ -1,7 +1,9 @@
-﻿#ifndef _UTILITIES_H
-#define _UTILITIES_H
+﻿/**
+ * It should not be included if system.h
+ * hasn't been included.
+ */
 
-#include <windows.h>
+#pragma once 
 
 void clearScreen() {
 #ifdef _WIN32
@@ -30,17 +32,22 @@ void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* cur
 
 int keyToQuaternary(char input, int quaternaryVector, int length) {
 	int temp = quaternaryVector;
-	if (input == 'D' || input == 'd')
+	switch (input) {
+	case 'D': case 'd': // >
 		temp = 0;
-	else if (input == 'W' || input == 'w')
+		break;
+	case 'W': case 'w': // ^
 		temp = 1;
-	else if (input == 'A' || input == 'a')
+		break;
+	case 'A': case 'a': // <
 		temp = 2;
-	else if (input == 'S' || input == 's')
+		break;
+	case 'S': case 's': // v
 		temp = 3;
+		break;
+	}
 	if (length > 1) //当蛇长大于1时，蛇头不可直接反向
 		if ((quaternaryVector - temp) % 2 == 0)
 			return quaternaryVector;
 	return temp;
 }
-#endif
