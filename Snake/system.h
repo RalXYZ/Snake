@@ -11,7 +11,7 @@
 #include <fcntl.h>
 
 // Windows 與 Linux 的函式庫名稱稍微不同。
-#define Sleep(msec) usleep(msec * 1000); // 不支援 s
+#define Sleep(msec) usleep(msec * 1000);
 #define _getch() getc(stdin)
 
 // thanks to https://cboard.cprogramming.com/c-programming/63166-kbhit-linux.html
