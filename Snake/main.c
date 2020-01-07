@@ -177,16 +177,16 @@ char coreToScreen(int number, int length, int quaternaryVector) {
 int keyToQuaternary(char input, int quaternaryVector, int length) {
 	int temp = quaternaryVector;
 	switch (input) {
-		case 'D': case 'd':
+		case 'D': case 'd': // >
 			temp = 0;
 			break;
-		case 'W': case 'w':
+		case 'W': case 'w': // ^
 			temp = 1;
 			break;
-		case 'A': case 'a':
+		case 'A': case 'a': // <
 			temp = 2;
 			break;
-		case 'S': case 's':
+		case 'S': case 's': // v
 			temp = 3;
 			break;
 	}
