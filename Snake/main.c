@@ -11,7 +11,6 @@
 double timePerFrame;
 int numberOfRow = 12, numberOfColumn = 12;
 int pulse = 0; //控制果实oO
-
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //将用户键盘输入的值翻译为方向值
 void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn); //将方向值与行列位置变化对应
@@ -98,7 +97,7 @@ int main() {
 		Sleep(timePerFrame);
 	}
 
-	/*在结束游戏后显示输赢*/
+	/*judge win or loss after ending*/
 	if (length != numberOfRow * numberOfColumn) {
 		screen[numberOfRow / 2][numberOfColumn - 1] = 'G';
 		screen[numberOfRow / 2][numberOfColumn] = 'A';
@@ -129,23 +128,6 @@ double accelerate(int length) {
 	return (5.0 * exp(3.0 - 0.05 * length) + 100);
 }
 
-void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn) {
-	switch (quaternaryVector) {
-	case 0:
-		++(*currentColumn);
-		break;
-	case 2:
-		--(*currentColumn);
-		break;
-	case 1:
-		--(*currentRow);
-		break;
-	case 3:
-		++(*currentRow);
-		break;
-	}
-}
-
 char coreToScreen(int number, int length, int quaternaryVector) {
 	if (number == 0)
 		return ' ';
@@ -153,7 +135,7 @@ char coreToScreen(int number, int length, int quaternaryVector) {
 		if (number != 1)
 			return '*';
 		else
-			switch (quaternaryVector) { //不同方向的蛇头
+			switch (quaternaryVector) { //head pointed to different directions
 			case 0:
 				return '>';
 			case 1:
@@ -172,20 +154,4 @@ char coreToScreen(int number, int length, int quaternaryVector) {
 			return 'O';
 	}
 	return '?'; // warning: control may reach end of non-void function
-}
-
-int keyToQuaternary(char input, int quaternaryVector, int length) {
-	int temp = quaternaryVector;
-	if (input == 'D' || input == 'd')
-		temp = 0;
-	else if (input == 'W' || input == 'w')
-		temp = 1;
-	else if (input == 'A' || input == 'a')
-		temp = 2;
-	else if (input == 'S' || input == 's')
-		temp = 3;
-	if (length > 1) //当蛇长大于1时，蛇头不可直接反向
-		if ((quaternaryVector - temp) % 2 == 0)
-			return quaternaryVector;
-	return temp;
 }
