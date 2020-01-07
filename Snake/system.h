@@ -1,5 +1,4 @@
-﻿#ifndef _SYSTEM_H
-#define _SYSTEM_H
+﻿#pragma once 
 
 /* for the sh*t, WIN32 */
 #ifdef _WIN32
@@ -39,6 +38,4 @@ int _kbhit(void) {
 
 	return 0;
 }
-#endif
-
 #endif
