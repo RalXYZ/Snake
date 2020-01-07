@@ -1,7 +1,9 @@
-﻿#ifndef _UTILITIES_H
-#define _UTILITIES_H
+﻿/**
+ * It should not be included if system.h
+ * hasn't been included.
+ */
 
-#include <windows.h>
+#pragma once 
 
 void clearScreen() {
 #ifdef _WIN32
@@ -10,5 +12,3 @@ void clearScreen() {
 	printf("\x1b[2J");
 #endif
 }
-
-#endif
