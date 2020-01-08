@@ -6,11 +6,10 @@
 #include "system.h"
 #include "utilities.h"
 
-#define LENGTH 40
-
 double timePerFrame;
 int numberOfRow = 12, numberOfColumn = 12;
 int pulse = 0; //控制果实oO
+char screen[2 * (LENGTH + 2) + 1][2 * (LENGTH + 2) + 1] = { 0 };
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //将用户键盘输入的值翻译为方向值
 void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn); //将方向值与行列位置变化对应
@@ -22,7 +21,7 @@ int main() {
 
 	/*数据预处理*/
 	int core[LENGTH + 2][LENGTH + 2] = { 0 };
-	char screen[2 * (LENGTH + 2) + 1][2 * (LENGTH + 2) + 1] = { 0 };
+
 	int currentRow = numberOfRow / 2 + 1, currentColumn = numberOfColumn / 2 + 1;
 	int quaternaryVector = rand() % 4;
 	int length = 1;
@@ -98,24 +97,10 @@ int main() {
 	}
 
 	/*judge win or loss after ending*/
-	if (length != numberOfRow * numberOfColumn) {
-		screen[numberOfRow / 2][numberOfColumn - 1] = 'G';
-		screen[numberOfRow / 2][numberOfColumn] = 'A';
-		screen[numberOfRow / 2][numberOfColumn + 1] = 'M';
-		screen[numberOfRow / 2][numberOfColumn + 2] = 'E';
-		screen[numberOfRow / 2 + 1][numberOfColumn - 1] = 'O';
-		screen[numberOfRow / 2 + 1][numberOfColumn] = 'V';
-		screen[numberOfRow / 2 + 1][numberOfColumn + 1] = 'E';
-		screen[numberOfRow / 2 + 1][numberOfColumn + 2] = 'R';
-	}
-	else {
-		screen[numberOfRow / 2][numberOfColumn - 1] = 'Y';
-		screen[numberOfRow / 2][numberOfColumn] = 'O';
-		screen[numberOfRow / 2][numberOfColumn + 1] = 'U';
-		screen[numberOfRow / 2 + 1][numberOfColumn - 1] = 'W';
-		screen[numberOfRow / 2 + 1][numberOfColumn] = 'I';
-		screen[numberOfRow / 2 + 1][numberOfColumn + 1] = 'N';
-	}
+	if (length != numberOfRow * numberOfColumn)
+		gameOver();
+	else
+		youWin();
 	clearScreen();
 	for (int i = 0; i < numberOfRow + 2; i++)
 		printf("%s", screen[i]);
