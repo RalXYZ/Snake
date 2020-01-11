@@ -14,7 +14,7 @@ void clearScreen() {
 #endif
 }
 
-void quaternaryVectorInterpreter(int quaternaryVector, int* currentRow, int* currentColumn) {
+void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn) {
 	switch (quaternaryVector) {
 	case 0:
 		++(*currentColumn);
@@ -47,7 +47,7 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
 		temp = 3;
 		break;
 	}
-	if (length > 1) //当蛇长大于1时，蛇头不可直接反向
+	if (length > 1) //the snake should not reverse its orientation when its length is bigger than 1
 		if ((quaternaryVector - temp) % 2 == 0)
 			return quaternaryVector;
 	return temp;

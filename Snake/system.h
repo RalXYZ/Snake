@@ -10,7 +10,7 @@
 #include <termios.h>
 #include <fcntl.h>
 
-// Windows 與 Linux 的函式庫名稱稍微不同。
+// there is a slight difference between Windows and Linux naming on function library
 #define Sleep(msec) usleep(msec * 1000);
 #define _getch() getc(stdin)
 
