@@ -1,4 +1,5 @@
-﻿#pragma once 
+﻿#pragma once
+#pragma once 
 
 /* for the sh*t, WIN32 */
 #ifdef _WIN32

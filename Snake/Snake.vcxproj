@@ -138,9 +138,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.c" />
+    <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="graphic.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="utilities.h" />
   </ItemGroup>

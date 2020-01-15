@@ -17,16 +17,16 @@ void clearScreen() {
 void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn) {
 	switch (quaternaryVector) {
 	case 0:
-		++(*currentColumn);
+		++(*currentRow);
 		break;
 	case 2:
-		--(*currentColumn);
-		break;
-	case 1:
 		--(*currentRow);
 		break;
+	case 1:
+		--(*currentColumn);
+		break;
 	case 3:
-		++(*currentRow);
+		++(*currentColumn);
 		break;
 	}
 }
@@ -54,7 +54,7 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
 }
 
 extern char screen[2 * (LENGTH + 2) + 1][2 * (LENGTH + 2) + 1];
-extern numberOfRow, numberOfColumn;
+extern int numberOfRow, numberOfColumn;
 void gameOver() {
 	screen[numberOfRow / 2][numberOfColumn - 1] = 'G';
 	screen[numberOfRow / 2][numberOfColumn] = 'A';

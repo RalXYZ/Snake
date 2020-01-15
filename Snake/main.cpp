@@ -3,17 +3,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#include <easyx.h>
 #include "system.h"
 #include "utilities.h"
+#include "graphic.h"
 
 double timePerFrame;
 int numberOfRow = 12, numberOfColumn = 12;
-int pulse = 0; //control the food 'o' 'O'
 char screen[2 * (LENGTH + 2) + 1][2 * (LENGTH + 2) + 1] = { 0 };
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //interpret the user input to "orientation value"
 void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
 char coreToScreen(int number, int length, int quaternaryVector);
+
 
 int main() {
 	/*create the seed for randoming*/
@@ -21,12 +23,12 @@ int main() {
 
 	/*data initialization*/
 	int core[LENGTH + 2][LENGTH + 2] = { 0 };
-
 	int currentRow = numberOfRow / 2 + 1, currentColumn = numberOfColumn / 2 + 1;
 	int quaternaryVector = rand() % 4;
 	int length = 1;
 	bool judgeSeed = false;
 
+	initgraph(280, 280);
 	/*checkerboard initialization*/
 	for (int i = 0; i < numberOfRow + 2; i++) {
 		if (i == 0 || i == numberOfRow + 1) //place '#' at the first and the last row
@@ -73,70 +75,81 @@ int main() {
 			}
 		}
 
+		clearrectangle(0, 0, 400, 400);
 		/*save all the outputs in screen[][]*/
 		for (int i = 0; i < numberOfRow + 2; i++) {
 			for (int j = 0; j < numberOfColumn + 2; j++) {
-				screen[i][2 * j] = coreToScreen(core[i][j], length, quaternaryVector);
-				screen[i][2 * j + 1] = ' '; //attention, that for the visual beauty, I considered the pixles each character occupies, so I add one space ' ' after each character
+				if (core[i][j] == 0)
+					;
+				else if (core[i][j] <= length) {
+					if (length == 1)
+						dotRectangle(i, j);
+					else {
+						if (core[i][j] == 1) {
+							if (core[i + 1][j] == 2)
+								rightRectangle(i, j);
+							else if (core[i - 1][j] == 2)
+								leftRectangle(i, j);
+							else if (core[i][j + 1] == 2)
+								downRectangle(i, j);
+							else if (core[i][j - 1] == 2)
+								upRectangle(i, j);
+						}
+						else if (core[i][j] == length) {
+							if (core[i + 1][j] == length - 1)
+								rightRectangle(i, j);
+							else if (core[i - 1][j] == length - 1)
+								leftRectangle(i, j);
+							else if (core[i][j + 1] == length - 1)
+								downRectangle(i, j);
+							else if (core[i][j - 1] == length - 1)
+								upRectangle(i, j);
+						}
+						else {
+							if ((core[i + 1][j] == core[i][j] + 1 || core[i + 1][j] == core[i][j] - 1)
+								&& (core[i - 1][j] == core[i][j] + 1 || core[i - 1][j] == core[i][j] - 1))
+								horizontalRectangle(i, j);
+							else if ((core[i][j + 1] == core[i][j] + 1 || core[i][j + 1] == core[i][j] - 1)
+								&& (core[i][j - 1] == core[i][j] + 1 || core[i][j - 1] == core[i][j] - 1))
+								verticalRectangle(i, j);
+							else {
+								if ((core[i][j + 1] == core[i][j] + 1 || core[i][j + 1] == core[i][j] - 1)
+									&& (core[i - 1][j] == core[i][j] + 1 || core[i - 1][j] == core[i][j] - 1))
+									downLeftRectangle(i, j);
+								else if ((core[i][j + 1] == core[i][j] + 1 || core[i][j + 1] == core[i][j] - 1)
+									&& (core[i + 1][j] == core[i][j] + 1 || core[i + 1][j] == core[i][j] - 1))
+									downRightRectangle(i, j);
+								else if ((core[i][j - 1] == core[i][j] + 1 || core[i][j - 1] == core[i][j] - 1)
+									&& (core[i - 1][j] == core[i][j] + 1 || core[i - 1][j] == core[i][j] - 1))
+									upLeftRectangle(i, j);
+								else if ((core[i][j - 1] == core[i][j] + 1 || core[i][j - 1] == core[i][j] - 1)
+									&& (core[i + 1][j] == core[i][j] + 1 || core[i + 1][j] == core[i][j] - 1))
+									upRightRectangle(i, j);
+							}
+						}
+					}
+				}
+				else if (core[i][j] == 666)
+					fillrectangle(j * 20, i * 20, j * 20 + 20, i * 20 + 20);  //return '#';
+				else if (core[i][j] == 777) {
+					fruitRectangle(i, j); //return 'o';
+				}
 			}
-			screen[i][2 * (numberOfColumn + 1) + 1] = '\n';
 		}
-
-		/*assistant data*/
-		// multiple unsequenced modifications to 'pulse'
-		pulse++;
-		pulse %= 2;
-
-		/*outputing*/
-		clearScreen();
-		for (int i = 0; i < numberOfRow + 2; i++)
-			printf("%s", screen[i]);
-		printf("Your current length is: %d\n", length);
 		timePerFrame = accelerate(length);
 		Sleep(timePerFrame);
 	}
 
-	/*judge win or loss after ending*/
+	/*judge win or loss after ending*/ //TODO need to fix
 	if (length != numberOfRow * numberOfColumn)
 		gameOver();
 	else
 		youWin();
 	clearScreen();
-	for (int i = 0; i < numberOfRow + 2; i++)
-		printf("%s", screen[i]);
-	printf("Your final length is: %d\n", length);
 	Sleep(11000);
 	return 0;
 }
 
 double accelerate(int length) {
 	return (5.0 * exp(3.0 - 0.05 * length) + 100);
-}
-
-char coreToScreen(int number, int length, int quaternaryVector) {
-	if (number == 0)
-		return ' ';
-	else if (number <= length)
-		if (number != 1)
-			return '*';
-		else
-			switch (quaternaryVector) { //head pointed to different directions
-			case 0:
-				return '>';
-			case 1:
-				return 'A';
-			case 2:
-				return '<';
-			case 3:
-				return 'V';
-			}
-	else if (number == 666)
-		return '#';
-	else if (number == 777) {
-		if (pulse == 0)
-			return 'o';
-		else
-			return 'O';
-	}
-	return '?'; // warning: control may reach end of non-void function
 }
