@@ -51,3 +51,67 @@ void dotRectangle(int y, int x) {
 void fruitRectangle(int y, int x) {
 	fillrectangle(y * 20 + 9, x * 20 + 9, y * 20 + 15, x * 20 + 15);
 }
+
+void paused() {
+	LOGFONT f;
+	gettextstyle(&f);
+	f.lfHeight = 48;
+	f.lfWidth = 16;
+	f.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+	f.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&f);
+	settextcolor(PIK);
+	outtextxy(30, 280, _T("GAME  PAUSED"));
+	settextcolor(GOD);
+
+	gettextstyle(&f);
+	f.lfHeight = 20;
+	f.lfWidth = 8;
+	f.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+	f.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&f);
+	settextcolor(PIK);
+	outtextxy(20, 328, _T("PRESS ANY KEY TO CONTINUE"));
+	settextcolor(GOD);
+}
+
+void gameOver() {
+	LOGFONT f;
+	gettextstyle(&f);
+	f.lfHeight = 48;
+	f.lfWidth = 16;
+	f.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+	f.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&f);
+	settextcolor(PIK);
+	outtextxy(48, 280, _T("GAME  OVER"));
+	settextcolor(GOD);
+
+	gettextstyle(&f);
+	f.lfHeight = 20;
+	f.lfWidth = 8;
+	f.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+	f.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&f);
+	settextcolor(PIK);
+	outtextxy(38, 328, _T("PRESS SPACE TO REPLAY"));
+	settextcolor(GOD);
+}
+
+void youWin() {
+	LOGFONT f;
+	gettextstyle(&f);
+	f.lfHeight = 48;
+	f.lfWidth = 16;
+	f.lfPitchAndFamily = FIXED_PITCH;
+	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+	f.lfQuality = ANTIALIASED_QUALITY;
+	settextstyle(&f);
+	settextcolor(PIK);
+	outtextxy(68, 280, _T("YOU  WIN"));
+	settextcolor(GOD);
+}

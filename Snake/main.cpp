@@ -1,4 +1,9 @@
-﻿#include <time.h>
+﻿#define HORIZENTAL 280
+#define VERTICAL 352
+#define PUR 0x3a2528
+#define PIK 0x4f17c3
+#define GOD 0x8d83b5 //0xdb9db3
+#include <time.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -13,7 +18,7 @@ int numberOfRow = 12, numberOfColumn = 12;
 char screen[2 * (LENGTH + 2) + 1][2 * (LENGTH + 2) + 1] = { 0 };
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //interpret the user input to "orientation value"
-void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
+void quaternarsyToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
 char coreToScreen(int number, int length, int quaternaryVector);
 
 
@@ -28,7 +33,10 @@ int main() {
 	int length = 1;
 	bool judgeSeed = false;
 
-	initgraph(280, 280);
+	initgraph(HORIZENTAL, VERTICAL);
+	setbkcolor(PUR);
+	setfillcolor(GOD);
+	setlinestyle(PS_NULL);
 	/*checkerboard initialization*/
 	for (int i = 0; i < numberOfRow + 2; i++) {
 		if (i == 0 || i == numberOfRow + 1) //place '#' at the first and the last row
@@ -42,8 +50,18 @@ int main() {
 
 	while (true) {
 		/*detect user keyboard input, and judge the next location of the snake's head based on it*/
-		if (_kbhit())
-			quaternaryVector = keyToQuaternary(_getch(), quaternaryVector, length);
+		char key = '\0';
+		if (key = _kbhit()) {
+			key = _getch();
+			if (key == ' ') {
+				clearrectangle(0, 280, HORIZENTAL, VERTICAL);
+				paused();
+				_getch();
+			}
+			else
+				quaternaryVector = keyToQuaternary(key, quaternaryVector, length);
+		}
+
 		quaternaryToVector(quaternaryVector, &currentRow, &currentColumn);
 
 		/*detect what exists at the next position the snake's head locates*/
@@ -51,7 +69,7 @@ int main() {
 			++length;
 			judgeSeed = false;
 		}
-		else if (core[currentRow][currentColumn] != 0)
+		else if (core[currentRow][currentColumn] != 0 && core[currentRow][currentColumn] != length)
 			break;
 
 		/*the movement of snake*/
@@ -75,8 +93,31 @@ int main() {
 			}
 		}
 
-		clearrectangle(0, 0, 400, 400);
-		/*save all the outputs in screen[][]*/
+		clearrectangle(0, 0, HORIZENTAL, VERTICAL);
+		wchar_t s[5];
+		wsprintf(s, L"%d", length);
+		LOGFONT f;
+		gettextstyle(&f);
+		f.lfHeight = 48;
+		f.lfWidth = 18;
+		_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+		f.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&f);
+		settextcolor(PIK);
+		outtextxy(140 - ((int)log10(length) + 1) * 9, 280, s);
+		settextcolor(GOD);
+
+		gettextstyle(&f);
+		f.lfHeight = 20;
+		f.lfWidth = 8;
+		f.lfPitchAndFamily = FIXED_PITCH;
+		_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
+		f.lfQuality = ANTIALIASED_QUALITY;
+		settextstyle(&f);
+		settextcolor(PIK);
+		outtextxy(44, 328, _T("PRESS SPACE TO PAUSE"));
+		settextcolor(GOD);
+
 		for (int i = 0; i < numberOfRow + 2; i++) {
 			for (int j = 0; j < numberOfColumn + 2; j++) {
 				if (core[i][j] == 0)
@@ -129,10 +170,18 @@ int main() {
 						}
 					}
 				}
-				else if (core[i][j] == 666)
+				else if (core[i][j] == 666) {
+					setfillcolor(PIK);
+					setfillstyle(BS_HATCHED, HS_DIAGCROSS);
 					fillrectangle(j * 20, i * 20, j * 20 + 20, i * 20 + 20);  //return '#';
+					setfillstyle(BS_SOLID);
+					setfillcolor(GOD);
+				}
+
 				else if (core[i][j] == 777) {
+					setfillcolor(PIK);
 					fruitRectangle(i, j); //return 'o';
+					setfillcolor(GOD);
 				}
 			}
 		}
@@ -141,12 +190,16 @@ int main() {
 	}
 
 	/*judge win or loss after ending*/ //TODO need to fix
-	if (length != numberOfRow * numberOfColumn)
+	if (length != numberOfRow * numberOfColumn) {
+		char key = '\0';
 		gameOver();
+		while (key = _getch())
+			if (key == ' ')
+				main();
+	}
 	else
 		youWin();
 	clearScreen();
-	Sleep(11000);
 	return 0;
 }
 
