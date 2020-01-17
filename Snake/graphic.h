@@ -1,55 +1,55 @@
 ﻿#pragma once
 
 void upRightRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 0, y * 20 + 18, x * 20 + 18);
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 24, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
 void upLeftRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 0, y * 20 + 18, x * 20 + 18);
-	fillrectangle(y * 20 + 0, x * 20 + 6, y * 20 + 18, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+	fillrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
 void downRightRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 18, x * 20 + 24);
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 24, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
 void downLeftRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 18, x * 20 + 24);
-	fillrectangle(y * 20 + 0, x * 20 + 6, y * 20 + 18, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+	fillrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
 void downRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 18, x * 20 + 24);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
 }
 
 void upRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 0, y * 20 + 18, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 }
 
 void rightRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 24, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
 void leftRectangle(int y, int x) {
-	fillrectangle(y * 20 + 0, x * 20 + 6, y * 20 + 18, x * 20 + 18);
+	fillrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
 void verticalRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 0, y * 20 + 18, x * 20 + 24);
+	fillrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 24);
 }
 
 void horizontalRectangle(int y, int x) {
-	fillrectangle(y * 20 + 0, x * 20 + 6, y * 20 + 24, x * 20 + 18);
+	fillrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
 void dotRectangle(int y, int x) {
-	fillrectangle(y * 20 + 6, x * 20 + 6, y * 20 + 18, x * 20 + 18);
+	fillrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
 void fruitRectangle(int y, int x) {
-	fillrectangle(y * 20 + 9, x * 20 + 9, y * 20 + 15, x * 20 + 15);
+	fillrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
 }
 
 void paused() {
@@ -62,7 +62,7 @@ void paused() {
 	f.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&f);
 	settextcolor(PIK);
-	outtextxy(30, 280, _T("GAME  PAUSED"));
+	outtextxy(54, 336, _T("GAME  PAUSED"));
 	settextcolor(GOD);
 
 	gettextstyle(&f);
@@ -73,7 +73,7 @@ void paused() {
 	f.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&f);
 	settextcolor(PIK);
-	outtextxy(20, 328, _T("PRESS ANY KEY TO CONTINUE"));
+	outtextxy(46, 384, _T("PRESS ANY KEY TO CONTINUE"));
 	settextcolor(GOD);
 }
 
@@ -87,7 +87,7 @@ void gameOver() {
 	f.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&f);
 	settextcolor(PIK);
-	outtextxy(48, 280, _T("GAME  OVER"));
+	outtextxy(72, 336, _T("GAME  OVER"));
 	settextcolor(GOD);
 
 	gettextstyle(&f);
@@ -98,7 +98,7 @@ void gameOver() {
 	f.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&f);
 	settextcolor(PIK);
-	outtextxy(38, 328, _T("PRESS SPACE TO REPLAY"));
+	outtextxy(64, 384, _T("PRESS SPACE TO REPLAY"));
 	settextcolor(GOD);
 }
 
@@ -112,6 +112,6 @@ void youWin() {
 	f.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&f);
 	settextcolor(PIK);
-	outtextxy(68, 280, _T("YOU  WIN"));
+	outtextxy(100, 336, _T("YOU  WIN"));
 	settextcolor(GOD);
 }

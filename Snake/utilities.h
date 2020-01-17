@@ -52,3 +52,22 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
 			return quaternaryVector;
 	return temp;
 }
+
+void mapInput() {
+	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(IDR_MAP01), "TEXT");
+	HGLOBAL hMemory = LoadResource(nullptr, hResource);
+	char* map = (char*)LockResource(hMemory);
+	int str_size = SizeofResource(nullptr, hResource);
+	if (!hResource) {
+		printf("Unable to load map file!");
+		exit(1);
+	}
+	for (int i = 0; i < str_size; i++) {
+		printf("%c", *map);
+		map++;
+	}
+}
+
+void eatSound() {
+	//TODO find a proper sound fx
+}

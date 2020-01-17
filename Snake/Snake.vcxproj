@@ -142,8 +142,15 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphic.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="utilities.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Snake.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="map01.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
