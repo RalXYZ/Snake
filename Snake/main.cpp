@@ -2,7 +2,6 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdbool.h>
 #include <easyx.h>
 #include <string>
 #include <thread>
@@ -11,16 +10,18 @@
 #define HORIZENTAL 336
 #define VERTICAL 408
 #define CUBE 24
-#define PUR 0x3a2528
-#define PIK 0x4f17c3
-#define GOD 0x8d83b5
 
 #include "system.h"
 #include "utilities.h"
 #include "graphic.h"
+#include "welcome.h"
 
-double timePerFrame;
+extern struct color theme[20];
+
+bool windowCreated = false;
+int themeNumber = 0;
 int numberOfRow = 12, numberOfColumn = 12;
+double timePerFrame;
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //interpret the user input to "orientation value"
 void quaternarsyToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
@@ -37,12 +38,8 @@ int main() {
 	int quaternaryVector = rand() % 4;
 	int length = 1;
 	bool judgeSeed = false;
+	bool hitBody = false;
 
-	initgraph(HORIZENTAL, VERTICAL);
-	setbkcolor(PUR);
-	setfillcolor(GOD);
-	setlinestyle(PS_NULL);
-	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
 	/*checkerboard initialization*/
 	for (int i = 0; i < numberOfRow + 2; i++) {
 		if (i == 0 || i == numberOfRow + 1) //place '#' at the first and the last row
@@ -54,8 +51,21 @@ int main() {
 					core[i][j] = 666;
 	}
 
+	/*window initialization*/
+	if (windowCreated == false) {
+		initgraph(HORIZENTAL, VERTICAL);
+		windowCreated = true;
+	}
+
+	welcome();
+
+	setbkcolor(theme[themeNumber].background);
+	setfillcolor(theme[themeNumber].accent);
+	setlinestyle(PS_NULL);
+	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
+
 	while (true) {
-		/*detect user keyboard input, and judge the next location of the snake's head based on it*/
+		/*detect user keyboard input, pause or go, and judge the next location of the snake's head based on it*/
 		char key = '\0';
 		if (key = _kbhit()) {
 			key = _getch();
@@ -78,13 +88,16 @@ int main() {
 			std::thread sound(eatSound);
 			sound.detach();
 		}
-		else if (core[currentRow][currentColumn] != 0 && core[currentRow][currentColumn] != length)
+		else if (core[currentRow][currentColumn] == 666)
 			break;
-		else
+		else {
+			if (core[currentRow][currentColumn] != 0 && core[currentRow][currentColumn] != length)
+				hitBody = true;
 			for (int i = 1; i <= numberOfRow; i++)
 				for (int j = 1; j <= numberOfColumn; j++)
 					if (core[i][j] != 0 && (core[i][j] == length || core[i][j] == length - 1))
 						clearrectangle(i * 24, j * 24, i * 24 + 24, j * 24 + 24);
+		}
 
 		/*the movement of snake*/
 		for (int i = 1; i <= numberOfRow; i++) {
@@ -107,31 +120,10 @@ int main() {
 			}
 		}
 
-		clearrectangle(0, 336, HORIZENTAL, VERTICAL);
-		wchar_t s[5];
-		wsprintf(s, L"%d", length);
-		LOGFONT f;
-		gettextstyle(&f);
-		f.lfHeight = 48;
-		f.lfWidth = 18;
-		_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-		f.lfQuality = ANTIALIASED_QUALITY;
-		settextstyle(&f);
-		settextcolor(PIK);
-		outtextxy(168 - ((int)log10(length) + 1) * 9, 336, s);
-		settextcolor(GOD);
+		statistics(length);
 
-		gettextstyle(&f);
-		f.lfHeight = 20;
-		f.lfWidth = 8;
-		f.lfPitchAndFamily = FIXED_PITCH;
-		_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-		f.lfQuality = ANTIALIASED_QUALITY;
-		settextstyle(&f);
-		settextcolor(PIK);
-		outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
-		settextcolor(GOD);
-
+		bool headExist = false; //ensure the head really "hits" the body visually while game over
+		int headX, headY; //ensure the head really "hits" the body visually while game over
 		for (int i = 0; i < numberOfRow + 2; i++) {
 			for (int j = 0; j < numberOfColumn + 2; j++) {
 				if (core[i][j] == 0)
@@ -141,14 +133,9 @@ int main() {
 						dotRectangle(i, j);
 					else {
 						if (core[i][j] == 1) {
-							if (core[i + 1][j] == 2)
-								rightRectangle(i, j);
-							else if (core[i - 1][j] == 2)
-								leftRectangle(i, j);
-							else if (core[i][j + 1] == 2)
-								downRectangle(i, j);
-							else if (core[i][j - 1] == 2)
-								upRectangle(i, j);
+							headExist = true;
+							headX = i;
+							headY = j;
 						}
 						else if (core[i][j] == length) {
 							if (core[i + 1][j] == length - 1)
@@ -185,20 +172,34 @@ int main() {
 					}
 				}
 				else if (core[i][j] == 666) {
-					setfillcolor(PIK);
+					setfillcolor(theme[themeNumber].foreground);
 					setfillstyle(BS_HATCHED, HS_DIAGCROSS);
-					fillrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);  //return '#';
+					solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);  //return '#';
 					setfillstyle(BS_SOLID);
-					setfillcolor(GOD);
+					setfillcolor(theme[themeNumber].accent);
 				}
 
 				else if (core[i][j] == 777) {
-					setfillcolor(PIK);
+					setfillcolor(theme[themeNumber].foreground);
 					fruitRectangle(i, j); //return 'o';
-					setfillcolor(GOD);
+					setfillcolor(theme[themeNumber].accent);
 				}
 			}
 		}
+		if (headExist == true) { //ensure the head really "hits" the body visually while game over
+			if (core[headX + 1][headY] == 2)
+				rightRectangle(headX, headY);
+			else if (core[headX - 1][headY] == 2)
+				leftRectangle(headX, headY);
+			else if (core[headX][headY + 1] == 2)
+				downRectangle(headX, headY);
+			else if (core[headX][headY - 1] == 2)
+				upRectangle(headX, headY);
+		}
+
+		if (hitBody == true)
+			break;
+
 		timePerFrame = accelerate(length);
 		Sleep(timePerFrame);
 	}
@@ -215,8 +216,4 @@ int main() {
 		youWin();
 	clearScreen();
 	return 0;
-}
-
-double accelerate(int length) {
-	return (5.0 * exp(3.0 - 0.05 * length) + 150);
 }

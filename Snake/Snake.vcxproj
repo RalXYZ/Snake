@@ -145,6 +145,7 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="system.h" />
     <ClInclude Include="utilities.h" />
+    <ClInclude Include="welcome.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Snake.rc" />

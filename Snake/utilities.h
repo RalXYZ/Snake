@@ -71,3 +71,7 @@ void mapInput() {
 void eatSound() {
 	//TODO find a proper sound fx
 }
+
+double accelerate(int length) {
+	return (5.0 * exp(3.0 - 0.05 * length) + 200);
+}
