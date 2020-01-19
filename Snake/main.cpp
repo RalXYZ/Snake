@@ -18,13 +18,21 @@
 
 extern struct color theme[20];
 
+struct snake {
+	int x;
+	int y;
+	struct snake* previous = nullptr;
+	struct snake* next;
+};
+
 bool windowCreated = false;
 int themeNumber = 0;
 int numberOfRow = 12, numberOfColumn = 12;
+int fruitRow, fruitColumn;
 double timePerFrame;
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //interpret the user input to "orientation value"
-void quaternarsyToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
+void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
 char coreToScreen(int number, int length, int quaternaryVector);
 
 int main() {
@@ -37,8 +45,15 @@ int main() {
 	int currentRow = numberOfRow / 2 + 1, currentColumn = numberOfColumn / 2 + 1;
 	int quaternaryVector = rand() % 4;
 	int length = 1;
-	bool judgeSeed = false;
+	bool fruitExists = false;
 	bool hitBody = false;
+
+	struct snake* oldBody = (struct snake*)malloc(sizeof(struct snake));
+	oldBody->x = numberOfRow / 2 + 1;
+	oldBody->y = numberOfColumn / 2 + 1;
+	oldBody->next = nullptr;
+	struct snake* head = oldBody;
+	struct snake* tail = oldBody;
 
 	/*checkerboard initialization*/
 	for (int i = 0; i < numberOfRow + 2; i++) {
@@ -81,122 +96,116 @@ int main() {
 
 		quaternaryToVector(quaternaryVector, &currentRow, &currentColumn);
 
-		/*detect what exists at the next position the snake's head locates*/
-		if (core[currentRow][currentColumn] == 777) {
+		/*detect what exists at the next position where the snake's head locates*/
+		if (currentRow == fruitRow && currentColumn == fruitColumn) {
 			++length;
-			judgeSeed = false;
+			fruitExists = false;
 			std::thread sound(eatSound);
 			sound.detach();
 		}
 		else if (core[currentRow][currentColumn] == 666)
 			break;
 		else {
-			if (core[currentRow][currentColumn] != 0 && core[currentRow][currentColumn] != length)
-				hitBody = true;
-			for (int i = 1; i <= numberOfRow; i++)
-				for (int j = 1; j <= numberOfColumn; j++)
-					if (core[i][j] != 0 && (core[i][j] == length || core[i][j] == length - 1))
-						clearrectangle(i * 24, j * 24, i * 24 + 24, j * 24 + 24);
+			for (struct snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
+				if (tempBody->x == currentRow && tempBody->y == currentColumn)
+					hitBody = true;
 		}
 
 		/*the movement of snake*/
-		for (int i = 1; i <= numberOfRow; i++) {
-			for (int j = 1; j <= numberOfColumn; j++)
-				if (core[i][j] != 0 && core[i][j] != 777) {
-					++core[i][j];
-					if (core[i][j] > length)
-						core[i][j] = 0;
-				}
+		struct snake* newBody = (struct snake*)malloc(sizeof(struct snake));
+		newBody->x = currentRow;
+		newBody->y = currentColumn;
+		newBody->previous = nullptr;
+		newBody->next = oldBody;
+		head = newBody;
+		oldBody->previous = newBody;
+		if (fruitExists == true) {
+			struct snake* temp = tail->previous;
+			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
+			free(tail);
+			tail = temp;
+			tail->next = nullptr;
 		}
-		core[currentRow][currentColumn] = 1;
+		oldBody = newBody;
 
 		/*place food randomly until the food is not located on the snake's body*/
-		while (judgeSeed == false) {
+		while (fruitExists == false) {
 			int tempRow = rand() % numberOfRow + 1;
 			int tempColumn = rand() % numberOfColumn + 1;
-			if (core[tempRow][tempColumn] == 0) {
-				core[tempRow][tempColumn] = 777;
-				judgeSeed = true;
+			for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+				if (tempBody->x == tempRow && tempBody->y == tempColumn)
+					break;
+				if (tempBody->next == nullptr) {
+					fruitRow = tempRow;
+					fruitColumn = tempColumn;
+					setfillcolor(theme[themeNumber].foreground);
+					fruitRectangle(fruitRow, fruitColumn);
+					setfillcolor(theme[themeNumber].accent);
+					fruitExists = true;
+				}
 			}
 		}
 
-		statistics(length);
-
 		bool headExist = false; //ensure the head really "hits" the body visually while game over
-		int headX, headY; //ensure the head really "hits" the body visually while game over
 		for (int i = 0; i < numberOfRow + 2; i++) {
 			for (int j = 0; j < numberOfColumn + 2; j++) {
-				if (core[i][j] == 0)
-					;
-				else if (core[i][j] <= length) {
-					if (length == 1)
-						dotRectangle(i, j);
-					else {
-						if (core[i][j] == 1) {
-							headExist = true;
-							headX = i;
-							headY = j;
-						}
-						else if (core[i][j] == length) {
-							if (core[i + 1][j] == length - 1)
-								rightRectangle(i, j);
-							else if (core[i - 1][j] == length - 1)
-								leftRectangle(i, j);
-							else if (core[i][j + 1] == length - 1)
-								downRectangle(i, j);
-							else if (core[i][j - 1] == length - 1)
-								upRectangle(i, j);
-						}
-						else if (core[i][j] == 2 || core[i][j] == length - 1) {
-							if ((core[i + 1][j] == core[i][j] + 1 || core[i + 1][j] == core[i][j] - 1)
-								&& (core[i - 1][j] == core[i][j] + 1 || core[i - 1][j] == core[i][j] - 1))
-								horizontalRectangle(i, j);
-							else if ((core[i][j + 1] == core[i][j] + 1 || core[i][j + 1] == core[i][j] - 1)
-								&& (core[i][j - 1] == core[i][j] + 1 || core[i][j - 1] == core[i][j] - 1))
-								verticalRectangle(i, j);
-							else {
-								if ((core[i][j + 1] == core[i][j] + 1 || core[i][j + 1] == core[i][j] - 1)
-									&& (core[i - 1][j] == core[i][j] + 1 || core[i - 1][j] == core[i][j] - 1))
-									downLeftRectangle(i, j);
-								else if ((core[i][j + 1] == core[i][j] + 1 || core[i][j + 1] == core[i][j] - 1)
-									&& (core[i + 1][j] == core[i][j] + 1 || core[i + 1][j] == core[i][j] - 1))
-									downRightRectangle(i, j);
-								else if ((core[i][j - 1] == core[i][j] + 1 || core[i][j - 1] == core[i][j] - 1)
-									&& (core[i - 1][j] == core[i][j] + 1 || core[i - 1][j] == core[i][j] - 1))
-									upLeftRectangle(i, j);
-								else if ((core[i][j - 1] == core[i][j] + 1 || core[i][j - 1] == core[i][j] - 1)
-									&& (core[i + 1][j] == core[i][j] + 1 || core[i + 1][j] == core[i][j] - 1))
-									upRightRectangle(i, j);
-							}
-						}
-					}
-				}
-				else if (core[i][j] == 666) {
+				if (core[i][j] == 666) {
 					setfillcolor(theme[themeNumber].foreground);
 					setfillstyle(BS_HATCHED, HS_DIAGCROSS);
 					solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);  //return '#';
 					setfillstyle(BS_SOLID);
 					setfillcolor(theme[themeNumber].accent);
 				}
-
-				else if (core[i][j] == 777) {
-					setfillcolor(theme[themeNumber].foreground);
-					fruitRectangle(i, j); //return 'o';
-					setfillcolor(theme[themeNumber].accent);
+			}
+		}
+		for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+			if (tempBody->previous != nullptr && tempBody->next != nullptr) {
+				if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
+					verticalRectangle(tempBody->x, tempBody->y);
+				else if (tempBody->y == tempBody->previous->y && tempBody->y == tempBody->next->y)
+					horizontalRectangle(tempBody->x, tempBody->y);
+				else {
+					if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y + 1
+						|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y + 1)
+						upLeftRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y - 1
+						|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y - 1)
+						downRightRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y - 1
+						|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y - 1)
+						downLeftRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y + 1
+						|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y + 1)
+						upRightRectangle(tempBody->x, tempBody->y);
+				}
+			}
+			else if (tempBody->previous == nullptr && tempBody->next == nullptr)
+				dotRectangle(tempBody->x, tempBody->y);
+			else {
+				if (tempBody->previous == nullptr) { //head
+					if (tempBody->x == tempBody->next->x + 1)
+						leftRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->x == tempBody->next->x - 1)
+						rightRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->y == tempBody->next->y + 1)
+						upRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->y == tempBody->next->y - 1)
+						downRectangle(tempBody->x, tempBody->y);
+				}
+				if (tempBody->next == nullptr) { //tail
+					if (tempBody->x == tempBody->previous->x + 1)
+						leftRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->x == tempBody->previous->x - 1)
+						rightRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->y == tempBody->previous->y + 1)
+						upRectangle(tempBody->x, tempBody->y);
+					else if (tempBody->y == tempBody->previous->y - 1)
+						downRectangle(tempBody->x, tempBody->y);
 				}
 			}
 		}
-		if (headExist == true) { //ensure the head really "hits" the body visually while game over
-			if (core[headX + 1][headY] == 2)
-				rightRectangle(headX, headY);
-			else if (core[headX - 1][headY] == 2)
-				leftRectangle(headX, headY);
-			else if (core[headX][headY + 1] == 2)
-				downRectangle(headX, headY);
-			else if (core[headX][headY - 1] == 2)
-				upRectangle(headX, headY);
-		}
-
+		//solidrectangle(tempBody->x * CUBE, tempBody->y * CUBE, tempBody->x * CUBE + CUBE, tempBody->y * CUBE + CUBE);
+		statistics(length);
 		if (hitBody == true)
 			break;
 
