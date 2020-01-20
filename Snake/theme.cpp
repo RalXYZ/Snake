@@ -3,6 +3,8 @@
 #include "theme.h"
 
 color nightClub = { 0x3a2528, 0x4f17c3, 0x8d83b5 };
+
+/*Designed by Sunflower*/
 color cangSong = { 0x273220, 0x6d7b63, 0xadc29c };
 color hoopoe = { 0x4d95ff, 0x1e2f48, 0xd8e6ff };
 color redBean = { 0xb4b2b9, 0x1f121b, 0x0e0b7a };
@@ -13,5 +15,6 @@ color panda = { 0x222222, 0xeaeaea, 0x828282 };
 color snowOwl = { 0xfafafa, 0x47cdfa, 0x20273d };
 color nightRain = { 0x201c19, 0x705f52, 0xd9baa2 };
 color plumage = { 0xffefdd, 0x00bdd4, 0xc0ac6e };
+/*Designed by Sunflower*/
 
 color theme[20] = { nightClub, cangSong, hoopoe, redBean, bluebird, rose, halloween, panda, snowOwl, nightRain, plumage };
