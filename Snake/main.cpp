@@ -5,25 +5,16 @@
 #include <easyx.h>
 #include <string>
 #include <thread>
+#include <windows.h>
+#include <conio.h>
 #include "resource.h"
-
-#define HORIZENTAL 336
-#define VERTICAL 408
-#define CUBE 24
-
-#include "system.h"
 #include "utilities.h"
-#include "graphic.h"
 #include "welcome.h"
+#include "graphic.h"
 
-extern struct color theme[20];
+extern color theme[20];
 
-struct snake {
-	int x;
-	int y;
-	struct snake* previous = nullptr;
-	struct snake* next;
-};
+
 
 bool windowCreated = false;
 int themeNumber = 0;
@@ -36,7 +27,6 @@ void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColum
 char coreToScreen(int number, int length, int quaternaryVector);
 
 int main() {
-
 	/*create the seed for randoming*/
 	srand((unsigned)time(NULL));
 
@@ -45,15 +35,15 @@ int main() {
 	int currentRow = numberOfRow / 2 + 1, currentColumn = numberOfColumn / 2 + 1;
 	int quaternaryVector = rand() % 4;
 	int length = 1;
-	bool fruitExists = false;
+	bool fruitExists = false, fruitEaten = false;
 	bool hitBody = false;
 
-	struct snake* oldBody = (struct snake*)malloc(sizeof(struct snake));
+	snake* oldBody = (snake*)malloc(sizeof(snake));
 	oldBody->x = numberOfRow / 2 + 1;
 	oldBody->y = numberOfColumn / 2 + 1;
 	oldBody->next = nullptr;
-	struct snake* head = oldBody;
-	struct snake* tail = oldBody;
+	snake* head = oldBody;
+	snake* tail = oldBody;
 
 	/*checkerboard initialization*/
 	for (int i = 0; i < numberOfRow + 2; i++) {
@@ -96,38 +86,6 @@ int main() {
 
 		quaternaryToVector(quaternaryVector, &currentRow, &currentColumn);
 
-		/*detect what exists at the next position where the snake's head locates*/
-		if (currentRow == fruitRow && currentColumn == fruitColumn) {
-			++length;
-			fruitExists = false;
-			std::thread sound(eatSound);
-			sound.detach();
-		}
-		else if (core[currentRow][currentColumn] == 666)
-			break;
-		else {
-			for (struct snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
-				if (tempBody->x == currentRow && tempBody->y == currentColumn)
-					hitBody = true;
-		}
-
-		/*the movement of snake*/
-		struct snake* newBody = (struct snake*)malloc(sizeof(struct snake));
-		newBody->x = currentRow;
-		newBody->y = currentColumn;
-		newBody->previous = nullptr;
-		newBody->next = oldBody;
-		head = newBody;
-		oldBody->previous = newBody;
-		if (fruitExists == true) {
-			struct snake* temp = tail->previous;
-			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
-			free(tail);
-			tail = temp;
-			tail->next = nullptr;
-		}
-		oldBody = newBody;
-
 		/*place food randomly until the food is not located on the snake's body*/
 		while (fruitExists == false) {
 			int tempRow = rand() % numberOfRow + 1;
@@ -146,6 +104,41 @@ int main() {
 			}
 		}
 
+		/*detect what exists at the next position where the snake's head locates*/
+		if (currentRow == fruitRow && currentColumn == fruitColumn) {
+			++length;
+			fruitExists = false;
+			fruitEaten = true;
+			std::thread sound(eatSound);
+			sound.detach();
+		}
+		else if (core[currentRow][currentColumn] == 666)
+			break;
+		else {
+			for (snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
+				if (tempBody->x == currentRow && tempBody->y == currentColumn)
+					hitBody = true;
+		}
+
+		/*the movement of snake*/
+		snake* newBody = (snake*)malloc(sizeof(snake));
+		newBody->x = currentRow;
+		newBody->y = currentColumn;
+		newBody->previous = nullptr;
+		newBody->next = oldBody;
+		head = newBody;
+		oldBody->previous = newBody;
+		if (fruitEaten == false) {
+			snake* temp = tail->previous;
+			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
+			free(tail);
+			tail = temp;
+			tail->next = nullptr;
+		}
+		else
+			fruitEaten = false;
+		oldBody = newBody;
+
 		bool headExist = false; //ensure the head really "hits" the body visually while game over
 		for (int i = 0; i < numberOfRow + 2; i++) {
 			for (int j = 0; j < numberOfColumn + 2; j++) {
@@ -158,53 +151,9 @@ int main() {
 				}
 			}
 		}
-		for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
-			if (tempBody->previous != nullptr && tempBody->next != nullptr) {
-				if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
-					verticalRectangle(tempBody->x, tempBody->y);
-				else if (tempBody->y == tempBody->previous->y && tempBody->y == tempBody->next->y)
-					horizontalRectangle(tempBody->x, tempBody->y);
-				else {
-					if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y + 1
-						|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y + 1)
-						upLeftRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y - 1
-						|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y - 1)
-						downRightRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y - 1
-						|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y - 1)
-						downLeftRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y + 1
-						|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y + 1)
-						upRightRectangle(tempBody->x, tempBody->y);
-				}
-			}
-			else if (tempBody->previous == nullptr && tempBody->next == nullptr)
-				dotRectangle(tempBody->x, tempBody->y);
-			else {
-				if (tempBody->previous == nullptr) { //head
-					if (tempBody->x == tempBody->next->x + 1)
-						leftRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->x == tempBody->next->x - 1)
-						rightRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->y == tempBody->next->y + 1)
-						upRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->y == tempBody->next->y - 1)
-						downRectangle(tempBody->x, tempBody->y);
-				}
-				if (tempBody->next == nullptr) { //tail
-					if (tempBody->x == tempBody->previous->x + 1)
-						leftRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->x == tempBody->previous->x - 1)
-						rightRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->y == tempBody->previous->y + 1)
-						upRectangle(tempBody->x, tempBody->y);
-					else if (tempBody->y == tempBody->previous->y - 1)
-						downRectangle(tempBody->x, tempBody->y);
-				}
-			}
+		for (snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+			visualSnake(tempBody);
 		}
-		//solidrectangle(tempBody->x * CUBE, tempBody->y * CUBE, tempBody->x * CUBE + CUBE, tempBody->y * CUBE + CUBE);
 		statistics(length);
 		if (hitBody == true)
 			break;
@@ -223,6 +172,5 @@ int main() {
 	}
 	else
 		youWin();
-	clearScreen();
 	return 0;
 }

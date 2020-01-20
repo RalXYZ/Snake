@@ -138,12 +138,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graphic.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="theme.cpp" />
+    <ClCompile Include="utilities.cpp" />
+    <ClCompile Include="welcome.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphic.h" />
+    <ClInclude Include="macros.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="system.h" />
+    <ClInclude Include="theme.h" />
     <ClInclude Include="utilities.h" />
     <ClInclude Include="welcome.h" />
   </ItemGroup>
