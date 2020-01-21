@@ -93,18 +93,48 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
 	return temp;
 }
 
+extern int map[LENGTH + 2][LENGTH + 2];
 void mapInput() {
-	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(IDR_MAP01), "TEXT");
+	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(IDR_MAP00), "TEXT");
 	HGLOBAL hMemory = LoadResource(nullptr, hResource);
-	char* map = (char*)LockResource(hMemory);
+	char* mapElement = (char*)LockResource(hMemory);
 	int str_size = SizeofResource(nullptr, hResource);
 	if (!hResource) {
 		printf("Unable to load map file!");
 		exit(1);
 	}
-	for (int i = 0; i < str_size; i++) {
-		printf("%c", *map);
-		map++;
+	for (int i = 0; i < 14; i++) {
+		for (int j = 0; j < 14; j++) {
+			map[i][j] = *mapElement - '0';
+			mapElement++;
+		}
+		mapElement++;
+		mapElement++;
+	}
+}
+
+extern int numberOfRow, numberOfColumn;
+extern int fruitRow, fruitColumn;
+extern int themeNumber;
+extern int map[LENGTH + 2][LENGTH + 2];
+void placeFruit(bool& fruitExists, snake*& head) {
+	while (fruitExists == false) {
+		int tempRow = rand() % numberOfRow + 1;
+		int tempColumn = rand() % numberOfColumn + 1;
+		if (map[tempColumn][tempRow] == 1)
+			continue;
+		for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+			if (tempBody->x == tempRow && tempBody->y == tempColumn)
+				break;
+			if (tempBody->next == nullptr) {
+				fruitRow = tempRow;
+				fruitColumn = tempColumn;
+				setfillcolor(theme[themeNumber].foreground);
+				fruitRectangle(fruitRow, fruitColumn);
+				setfillcolor(theme[themeNumber].accent);
+				fruitExists = true;
+			}
+		}
 	}
 }
 

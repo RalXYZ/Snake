@@ -2,6 +2,8 @@
 
 #include "theme.h"
 
+int themeNumber = 0;
+
 color nightClub = { 0x3a2528, 0x4f17c3, 0x8d83b5 };
 
 /*Designed by Sunflower*/

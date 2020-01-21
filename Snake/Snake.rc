@@ -62,6 +62,8 @@ LANGUAGE LANG_ENGLISH, SUBLANG_ENGLISH_US
 
 IDR_MAP01               TEXT                    "map01.bin"
 
+IDR_MAP00               TEXT                    "map00.bin"
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

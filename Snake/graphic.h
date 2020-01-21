@@ -19,3 +19,4 @@ void paused();
 void gameOver();
 void youWin();
 void statistics(int length);
+void welcome();

@@ -142,7 +142,6 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="theme.cpp" />
     <ClCompile Include="utilities.cpp" />
-    <ClCompile Include="welcome.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphic.h" />
@@ -150,13 +149,13 @@
     <ClInclude Include="resource.h" />
     <ClInclude Include="theme.h" />
     <ClInclude Include="utilities.h" />
-    <ClInclude Include="welcome.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Snake.rc" />
   </ItemGroup>
   <ItemGroup>
     <None Include="map01.bin" />
+    <None Include="map00.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
