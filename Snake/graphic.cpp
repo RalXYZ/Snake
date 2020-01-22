@@ -59,69 +59,47 @@ void fruitRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
 }
 
-extern int length;
-void paused() {
-	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
+void smallFontsOutput(int height, int width) {
 	LOGFONT f;
 	gettextstyle(&f);
-	f.lfHeight = 48;
-	f.lfWidth = 16;
+	f.lfHeight = height;
+	f.lfWidth = width;
 	f.lfPitchAndFamily = FIXED_PITCH;
 	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
 	f.lfQuality = ANTIALIASED_QUALITY;
 	settextstyle(&f);
+}
+
+extern int length;
+void paused() {
+	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
+	smallFontsOutput(48, 16);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(54, 336, _T("GAME  PAUSED"));
 	settextcolor(theme[themeNumber].accent);
 
-	gettextstyle(&f);
-	f.lfHeight = 20;
-	f.lfWidth = 8;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(20, 8);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(46, 384, _T("PRESS ANY KEY TO CONTINUE"));
 	settextcolor(theme[themeNumber].accent);
 }
 
 void gameOver() {
-	LOGFONT f;
-	gettextstyle(&f);
-	f.lfHeight = 48;
-	f.lfWidth = 16;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(48, 16);
 	settextcolor(theme[themeNumber].foreground);
 	setbkmode(TRANSPARENT);
 	outtextxy(76, 144, _T("GAME  OVER"));
 	settextcolor(theme[themeNumber].accent);
 	setbkmode(OPAQUE);
 
-	gettextstyle(&f);
-	f.lfHeight = 20;
-	f.lfWidth = 8;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(20, 8);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(64, 384, _T("PRESS SPACE TO REPLAY"));
 	settextcolor(theme[themeNumber].accent);
 }
 
 void youWin() {
-	LOGFONT f;
-	gettextstyle(&f);
-	f.lfHeight = 48;
-	f.lfWidth = 16;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(48, 16);
 	settextcolor(theme[themeNumber].foreground);
 	setbkmode(TRANSPARENT);
 	outtextxy(100, 144, _T("YOU  WIN"));
@@ -133,24 +111,12 @@ void statistics(int length) {
 	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
-	LOGFONT f;
-	gettextstyle(&f);
-	f.lfHeight = 48;
-	f.lfWidth = 18;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(48, 18);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(164 - ((int)log10(length) + 1) * 9, 336, s);
 	settextcolor(theme[themeNumber].accent);
 
-	gettextstyle(&f);
-	f.lfHeight = 20;
-	f.lfWidth = 8;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(20, 8);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
 	settextcolor(theme[themeNumber].accent);
@@ -166,26 +132,12 @@ void welcome() {
 	setfillstyle(BS_SOLID);
 	clearrectangle(CUBE, CUBE, HORIZENTAL - CUBE, HORIZENTAL - CUBE);
 
-	LOGFONT f;
-
-	gettextstyle(&f);
-	f.lfHeight = 48;
-	f.lfWidth = 18;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(48, 18);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(96, 144, _T("SNAKE"));
 	settextcolor(theme[themeNumber].accent);
 
-	gettextstyle(&f);
-	f.lfHeight = 20;
-	f.lfWidth = 8;
-	f.lfPitchAndFamily = FIXED_PITCH;
-	_tcscpy_s(f.lfFaceName, _T("Small Fonts"));
-	f.lfQuality = ANTIALIASED_QUALITY;
-	settextstyle(&f);
+	smallFontsOutput(20, 8);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(2, 349, _T("PRESS ANY                     TO CHANGE THEME"));
 	outtextxy(72, 375, _T("PRESS SPACE TO PLAY"));
@@ -200,6 +152,22 @@ void welcome() {
 			themeNumber = temp - '0';
 			welcome();
 			break;
+		}
+	}
+}
+
+extern int numberOfRow, numberOfColumn;
+extern int map[LENGTH + 2][LENGTH + 2];
+void printMap() {
+	for (int i = 0; i < numberOfRow + 2; i++) {
+		for (int j = 0; j < numberOfColumn + 2; j++) {
+			if (map[i][j] == 1) {
+				setfillcolor(theme[themeNumber].foreground);
+				setfillstyle(BS_HATCHED, HS_DIAGCROSS);
+				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);  //return '#';
+				setfillstyle(BS_SOLID);
+				setfillcolor(theme[themeNumber].accent);
+			}
 		}
 	}
 }

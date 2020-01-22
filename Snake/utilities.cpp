@@ -93,7 +93,7 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
 	return temp;
 }
 
-extern int map[LENGTH + 2][LENGTH + 2];
+int map[LENGTH + 2][LENGTH + 2];
 void mapInput() {
 	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(IDR_MAP00), "TEXT");
 	HGLOBAL hMemory = LoadResource(nullptr, hResource);
@@ -116,7 +116,6 @@ void mapInput() {
 extern int numberOfRow, numberOfColumn;
 extern int fruitRow, fruitColumn;
 extern int themeNumber;
-extern int map[LENGTH + 2][LENGTH + 2];
 void placeFruit(bool& fruitExists, snake*& head) {
 	while (fruitExists == false) {
 		int tempRow = rand() % numberOfRow + 1;

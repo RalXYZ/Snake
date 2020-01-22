@@ -13,13 +13,13 @@
 
 extern color theme[20];
 extern int themeNumber;
+extern int map[LENGTH + 2][LENGTH + 2];
 
 bool windowCreated = false;
 
 int numberOfRow = 12, numberOfColumn = 12;
 int fruitRow, fruitColumn;
 double timePerFrame;
-int map[LENGTH + 2][LENGTH + 2] = { 0 };
 double accelerate(int length);
 int keyToQuaternary(char input, int quaternaryVector, int length); //interpret the user input to "orientation value"
 void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
@@ -36,6 +36,7 @@ int main() {
 	bool fruitExists = false;
 	bool hitBody = false;
 	bool firstLoop = true;
+	themeNumber = rand() % 10;
 
 	snake* oldBody = (snake*)malloc(sizeof(snake));
 	oldBody->x = numberOfRow / 2 + 1;
@@ -44,13 +45,13 @@ int main() {
 	snake* head = oldBody;
 	snake* tail = oldBody;
 
-	mapInput();
-
 	/*window initialization*/
 	if (windowCreated == false) {
 		initgraph(HORIZENTAL, VERTICAL);
 		windowCreated = true;
 	}
+
+	mapInput();
 
 	welcome();
 
@@ -116,17 +117,9 @@ int main() {
 		/*place food randomly until the food is not located on the snake's body*/
 		placeFruit(fruitExists, head);
 
-		for (int i = 0; i < numberOfRow + 2; i++) {
-			for (int j = 0; j < numberOfColumn + 2; j++) {
-				if (map[i][j] == 1) {
-					setfillcolor(theme[themeNumber].foreground);
-					setfillstyle(BS_HATCHED, HS_DIAGCROSS);
-					solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);  //return '#';
-					setfillstyle(BS_SOLID);
-					setfillcolor(theme[themeNumber].accent);
-				}
-			}
-		}
+		/*output*/
+		if (firstLoop)
+			printMap();
 		for (snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
 			visualSnake(tempBody);
 		}

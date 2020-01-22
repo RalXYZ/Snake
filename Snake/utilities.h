@@ -1,6 +1,7 @@
 ﻿#pragma once 
 
-#define LENGTH 40
+#include "macros.h"
+
 
 struct snake {
 	int x;
