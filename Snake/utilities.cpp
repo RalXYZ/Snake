@@ -94,13 +94,13 @@ int keyToQuaternary(char input, int quaternaryVector, int length) {
 }
 
 int map[LENGTH + 2][LENGTH + 2];
-void mapInput() {
-	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(IDR_MAP00), "TEXT");
+void mapInput(int mapMacro) {
+	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(mapMacro), "TEXT");
 	HGLOBAL hMemory = LoadResource(nullptr, hResource);
 	char* mapElement = (char*)LockResource(hMemory);
 	int str_size = SizeofResource(nullptr, hResource);
 	if (!hResource) {
-		printf("Unable to load map file!");
+		printf("Unable to load map file! %d", mapMacro);
 		exit(1);
 	}
 	for (int i = 0; i < 14; i++) {
@@ -128,9 +128,9 @@ void placeFruit(bool& fruitExists, snake*& head) {
 			if (tempBody->next == nullptr) {
 				fruitRow = tempRow;
 				fruitColumn = tempColumn;
-				setfillcolor(theme[themeNumber].foreground);
+				//setfillcolor(theme[themeNumber].foreground);
 				fruitRectangle(fruitRow, fruitColumn);
-				setfillcolor(theme[themeNumber].accent);
+				//setfillcolor(theme[themeNumber].accent);
 				fruitExists = true;
 			}
 		}

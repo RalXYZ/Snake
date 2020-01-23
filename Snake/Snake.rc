@@ -64,6 +64,16 @@ IDR_MAP01               TEXT                    "map01.bin"
 
 IDR_MAP00               TEXT                    "map00.bin"
 
+IDR_MAP02               TEXT                    "map02.bin"
+
+IDR_MAP03               TEXT                    "map03.bin"
+
+IDR_MAP04               TEXT                    "map04.bin"
+
+IDR_MAP05               TEXT                    "map05.bin"
+
+IDR_MAP06               TEXT                    "map06.bin"
+
 #endif    // English (United States) resources
 /////////////////////////////////////////////////////////////////////////////
 

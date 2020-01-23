@@ -30,6 +30,9 @@
     <ClInclude Include="theme.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="maps.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -44,6 +47,9 @@
     <ClCompile Include="theme.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="maps.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="Snake.rc">
@@ -55,6 +61,21 @@
       <Filter>Resource Files</Filter>
     </None>
     <None Include="map00.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="map02.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="map03.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="map04.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="map05.bin">
+      <Filter>Resource Files</Filter>
+    </None>
+    <None Include="map06.bin">
       <Filter>Resource Files</Filter>
     </None>
   </ItemGroup>

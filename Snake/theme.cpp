@@ -12,11 +12,11 @@ color hoopoe = { 0x4d95ff, 0x1e2f48, 0xd8e6ff };
 color redBean = { 0xb4b2b9, 0x1f121b, 0x0e0b7a };
 color bluebird = { 0xd9d1c9, 0xba8047, 0x5552ba };
 color rose = { 0x312e31, 0xb9b6ff, 0x7f5fff };
-color halloween = { 0x2b161c, 0x1281c3, 0x0a4eb9 };
-color panda = { 0x222222, 0xeaeaea, 0x828282 };
-color snowOwl = { 0xfafafa, 0x47cdfa, 0x20273d };
+color halloween = { 0x2b161c, 0x0a4eb9, 0x1281c3 };
+color panda = { 0x222222, 0x828282, 0xeaeaea };
+color snowOwl = { 0xfafafa, 0x20273d, 0x47cdfa };
 color nightRain = { 0x201c19, 0x705f52, 0xd9baa2 };
 color plumage = { 0xffefdd, 0x00bdd4, 0xc0ac6e };
 /*Designed by Sunflower*/
 
-color theme[20] = { nightClub, cangSong, hoopoe, redBean, bluebird, rose, halloween, panda, snowOwl, nightRain, plumage };
+color theme[] = { nightClub, cangSong, hoopoe, redBean, bluebird, rose, halloween, panda, nightRain, plumage };

@@ -140,12 +140,14 @@
   <ItemGroup>
     <ClCompile Include="graphic.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="maps.cpp" />
     <ClCompile Include="theme.cpp" />
     <ClCompile Include="utilities.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="graphic.h" />
     <ClInclude Include="macros.h" />
+    <ClInclude Include="maps.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="theme.h" />
     <ClInclude Include="utilities.h" />
@@ -156,6 +158,11 @@
   <ItemGroup>
     <None Include="map01.bin" />
     <None Include="map00.bin" />
+    <None Include="map02.bin" />
+    <None Include="map03.bin" />
+    <None Include="map04.bin" />
+    <None Include="map05.bin" />
+    <None Include="map06.bin" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

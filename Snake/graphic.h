@@ -3,6 +3,8 @@
 #include "macros.h"
 #include "theme.h"
 #include "macros.h"
+#include "utilities.h"
+#include "maps.h"
 
 extern color theme[20];
 
@@ -21,8 +23,8 @@ void fruitRectangle(int y, int x);
 
 void smallFontsOutput(int height, int width);
 void paused();
-void gameOver();
+void gameOver(int length);
 void youWin();
 void statistics(int length);
-void welcome();
+void welcome(snake*& head);
 void printMap();

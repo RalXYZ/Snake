@@ -10,9 +10,13 @@
 #include "resource.h"
 #include "utilities.h"
 #include "graphic.h"
+#include "maps.h"
 
-extern color theme[20];
+extern color theme[];
 extern int themeNumber;
+extern maps mapResource[];
+extern int mapNumber;
+extern int spawnNumber;
 extern int map[LENGTH + 2][LENGTH + 2];
 
 bool windowCreated = false;
@@ -26,21 +30,25 @@ void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColum
 char coreToScreen(int number, int length, int quaternaryVector);
 
 int main() {
+
 	/*create the seed for randoming*/
 	srand((unsigned)time(NULL));
 
 	/*data initialization*/
+	themeNumber = rand() % 9;
+	mapNumber = rand() % 7;
+	spawnNumber = rand() % 4;
+	int quaternaryVector = mapResource[mapNumber].spawn[spawnNumber].quaternaryVector;
+	int currentRow = mapResource[mapNumber].spawn[spawnNumber].spawnX,
+		currentColumn = mapResource[mapNumber].spawn[spawnNumber].spawnY;
 	int length = 1;
-	int currentRow = numberOfRow / 2 + 1, currentColumn = numberOfColumn / 2 + 1;
-	int quaternaryVector = rand() % 4;
 	bool fruitExists = false;
 	bool hitBody = false;
 	bool firstLoop = true;
-	themeNumber = rand() % 10;
 
 	snake* oldBody = (snake*)malloc(sizeof(snake));
-	oldBody->x = numberOfRow / 2 + 1;
-	oldBody->y = numberOfColumn / 2 + 1;
+	oldBody->x = mapResource[mapNumber].spawn[spawnNumber].spawnX;
+	oldBody->y = mapResource[mapNumber].spawn[spawnNumber].spawnY;
 	oldBody->next = nullptr;
 	snake* head = oldBody;
 	snake* tail = oldBody;
@@ -50,15 +58,11 @@ int main() {
 		initgraph(HORIZENTAL, VERTICAL);
 		windowCreated = true;
 	}
-
-	mapInput();
-
-	welcome();
-
-	setbkcolor(theme[themeNumber].background);
-	setfillcolor(theme[themeNumber].accent);
 	setlinestyle(PS_NULL);
-	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
+
+	mapInput(mapResource[mapNumber].mapMacro);
+
+	welcome(head);
 
 	while (true) {
 		bool fruitEaten = false;
@@ -79,6 +83,8 @@ int main() {
 		quaternaryToVector(quaternaryVector, &currentRow, &currentColumn);
 
 		/*place food randomly until the food is not located on the snake's body*/
+		//if (firstLoop)
+			//printMap();
 		placeFruit(fruitExists, head);
 
 		/*detect what exists at the next position where the snake's head locates*/
@@ -89,8 +95,23 @@ int main() {
 			std::thread sound(eatSound);
 			sound.detach();
 		}
-		else if (map[currentColumn][currentRow] == 1)
+		else if (map[currentColumn][currentRow] == 1) {
+			switch (quaternaryVector) {
+			case 0:
+				rightRectangle(head->x, head->y);
+				break;
+			case 1:
+				upRectangle(head->x, head->y);
+				break;
+			case 2:
+				leftRectangle(head->x, head->y);
+				break;
+			case 3:
+				downRectangle(head->x, head->y);
+				break;
+			}
 			break;
+		}
 		else {
 			for (snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
 				if (tempBody->x == currentRow && tempBody->y == currentColumn)
@@ -118,8 +139,6 @@ int main() {
 		placeFruit(fruitExists, head);
 
 		/*output*/
-		if (firstLoop)
-			printMap();
 		for (snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
 			visualSnake(tempBody);
 		}
@@ -138,7 +157,7 @@ int main() {
 	/*judge win or loss after ending*/ //TODO need to fix
 	if (length != numberOfRow * numberOfColumn) {
 		char key = '\0';
-		gameOver();
+		gameOver(length);
 		while (key = _getch())
 			if (key == ' ')
 				main();
