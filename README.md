@@ -18,7 +18,7 @@ This is a game program called **Snake(贪吃蛇)** written in pure C.
 Here lists the design schemes of the map and theme.  
 Thanks to `Sunflower`, every scheme listed below are designed by her.  
 
-| map02 | map03 | map04 | map05 | map06 |
+| Capture | Plug | Dice | Lucky Clover | Shell |
 | :---: | :---: | :---: | :---: | :---: |
 | ![map02.png](https://i.loli.net/2020/01/23/uIUZ7RlSGPfvK6C.png) | ![map03.png](https://i.loli.net/2020/01/23/AFBEkrjguRi1PTN.png) | ![map04.png](https://i.loli.net/2020/01/23/eZUM3NWJogdGl1K.png) | ![map05.png](https://i.loli.net/2020/01/23/GIlTvLYnr8iOSaw.png) | ![map06.png](https://i.loli.net/2020/01/23/bIhgxTDKtEBG5qH.png) |
   
