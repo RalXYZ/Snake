@@ -1,10 +1,10 @@
 # Snake 
-This is a game program called **Snake(贪吃蛇)** written in pure C.  
+This is an implementation of the classic Nokia brick phoone game **Snake(贪吃蛇)**, written with C.
 
 ## Before playing
-- **Control** the snake by pressing <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>  
-- When you **hit** the wall or **bite** your body, the game is over  
-- The **map** and **theme** will change randomly every time you play the game  
+- **Steer** the snake with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>  
+- When you **hit** a wall or **bite** your own body, game over
+- The **map** and **theme** changes randomly every time you play the game  
 
 ## Fetures
 - [x] Graphical user interface (GUI)
@@ -12,11 +12,10 @@ This is a game program called **Snake(贪吃蛇)** written in pure C.
 - [x] 7 different maps
 - [x] Pause while gaming
 - [ ] Leaderboard and achievements
-- [ ] Change difficulty in a specific window
+- [ ] Difficulty selection window
 
 ## Design
-Here lists the design schemes of the map and theme.  
-Thanks to `Sunflower`, every scheme listed below are designed by her.  
+The following details the 10 themes and 7 maps built into the game, designed by `Sunflower`.
 
 ### Maps
 | Capture | Plug | Dice | Lucky Clover | Shell |
