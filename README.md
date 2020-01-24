@@ -1,5 +1,5 @@
 # Snake 
-This is an implementation of the classic Nokia brick phoone game **Snake(贪吃蛇)**, written with C.
+This is an implementation of the classic Nokia brick phone game **Snake(贪吃蛇)**, written with C.
 
 ## Before playing
 - **Steer** the snake with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>  
