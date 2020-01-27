@@ -1,5 +1,5 @@
 <p align="center">
-<img width = '900' height ='1200' src="https://i.loli.net/2020/01/27/mx61ao7gjz4NlqK.png" >
+<img src = "https://i.loli.net/2020/01/27/V2JS9e3rocCIgwL.png">
 </p>
   
 # Snake 
