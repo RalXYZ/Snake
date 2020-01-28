@@ -1,3 +1,7 @@
+<p align="center">
+<img src = "https://i.loli.net/2020/01/27/V2JS9e3rocCIgwL.png">
+</p>
+  
 # Snake 
 This is an implementation of the classic Nokia brick phone game **Snake(贪吃蛇)**, written with C.
 
