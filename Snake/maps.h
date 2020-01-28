@@ -1,5 +1,7 @@
 ﻿#pragma once
 
+#include "macros.h"
+
 struct maps {
 	maps(int macro) {
 		this->mapMacro = macro;
@@ -7,7 +9,7 @@ struct maps {
 	struct {
 		int spawnX;
 		int spawnY;
-		int quaternaryVector;
-	} spawn[4] = { {1, 1, 0}, {1, 12, 1}, {12, 12, 2}, {12, 1, 3} };
+		int headDirection;
+	} spawn[4] = { {1, 1, Right}, {1, 12, Up}, {12, 12, Left}, {12, 1, Down} };
 	int mapMacro;
 };

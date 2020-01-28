@@ -1,12 +1,10 @@
-﻿#include <time.h>
-#include <math.h>
-#include <stdio.h>
-#include <stdlib.h>
+﻿#include <ctime>
+#include <cstdlib>
 #include <easyx.h>
-#include <string>
-#include <thread>
 #include <windows.h>
 #include <conio.h>
+#include <string>
+#include <thread>
 #include "resource.h"
 #include "utilities.h"
 #include "graphic.h"
@@ -38,7 +36,7 @@ int main() {
 	themeNumber = rand() % 9;
 	mapNumber = rand() % 7;
 	spawnNumber = rand() % 4;
-	int quaternaryVector = mapResource[mapNumber].spawn[spawnNumber].quaternaryVector;
+	int headDirection = mapResource[mapNumber].spawn[spawnNumber].headDirection;
 	int currentRow = mapResource[mapNumber].spawn[spawnNumber].spawnX,
 		currentColumn = mapResource[mapNumber].spawn[spawnNumber].spawnY;
 	int length = 1;
@@ -46,7 +44,8 @@ int main() {
 	bool hitBody = false;
 	bool firstLoop = true;
 
-	snake* oldBody = (snake*)malloc(sizeof(snake));
+	/*linked list initialization*/
+	snake* oldBody = new snake;
 	oldBody->x = mapResource[mapNumber].spawn[spawnNumber].spawnX;
 	oldBody->y = mapResource[mapNumber].spawn[spawnNumber].spawnY;
 	oldBody->next = nullptr;
@@ -77,14 +76,12 @@ int main() {
 				statistics(length);
 			}
 			else
-				quaternaryVector = keyToQuaternary(key, quaternaryVector, length);
+				headDirection = keyToQuaternary(key, headDirection, length);
 		}
 
-		quaternaryToVector(quaternaryVector, &currentRow, &currentColumn);
+		quaternaryToVector(headDirection, &currentRow, &currentColumn);
 
 		/*place food randomly until the food is not located on the snake's body*/
-		//if (firstLoop)
-			//printMap();
 		placeFruit(fruitExists, head);
 
 		/*detect what exists at the next position where the snake's head locates*/
@@ -96,17 +93,17 @@ int main() {
 			sound.detach();
 		}
 		else if (map[currentColumn][currentRow] == 1) {
-			switch (quaternaryVector) {
-			case 0:
+			switch (headDirection) {
+			case Right:
 				rightRectangle(head->x, head->y);
 				break;
-			case 1:
+			case Up:
 				upRectangle(head->x, head->y);
 				break;
-			case 2:
+			case Left:
 				leftRectangle(head->x, head->y);
 				break;
-			case 3:
+			case Down:
 				downRectangle(head->x, head->y);
 				break;
 			}
@@ -119,7 +116,7 @@ int main() {
 		}
 
 		/*the movement of snake*/
-		snake* newBody = (snake*)malloc(sizeof(snake));
+		snake* newBody = new snake;
 		newBody->x = currentRow;
 		newBody->y = currentColumn;
 		newBody->previous = nullptr;
@@ -129,7 +126,7 @@ int main() {
 		if (fruitEaten == false) {
 			snake* temp = tail->previous;
 			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
-			free(tail);
+			delete tail;
 			tail = temp;
 			tail->next = nullptr;
 		}
@@ -154,7 +151,14 @@ int main() {
 		firstLoop = false;
 	}
 
-	/*judge win or loss after ending*/ //TODO need to fix
+	/*prevent memory leak, delete the linked list of snake*/
+	for (snake* i = head; i != nullptr; ) {
+		snake* temp = i->next;
+		delete i;
+		i = temp;
+	}
+
+	/*judge win or loss after ending*/
 	if (length != numberOfRow * numberOfColumn) {
 		char key = '\0';
 		gameOver(length);

@@ -9,7 +9,7 @@ struct snake {
 	snake* next;
 };
 
-void visualSnake(snake*& tempBody);
+void visualSnake(snake* tempBody);
 void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn);
 int keyToQuaternary(char input, int quaternaryVector, int length);
 void mapInput(int mapMacro);

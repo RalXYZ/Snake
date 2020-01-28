@@ -1,13 +1,13 @@
 ﻿#pragma once
 
-#include <math.h>
-#include <stdio.h>
+#include <cmath>
+#include <cstdio>
 #include <easyx.h>
 #include "graphic.h"
 #include "utilities.h"
 #include "resource.h"
 
-void visualSnake(snake*& tempBody) {
+void visualSnake(snake* tempBody) {
 	if (tempBody->previous != nullptr && tempBody->next != nullptr) {
 		if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
 			verticalRectangle(tempBody->x, tempBody->y);
@@ -56,16 +56,16 @@ void visualSnake(snake*& tempBody) {
 
 void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn) {
 	switch (quaternaryVector) {
-	case 0:
+	case Right:
 		++(*currentRow);
 		break;
-	case 2:
+	case Left:
 		--(*currentRow);
 		break;
-	case 1:
+	case Up:
 		--(*currentColumn);
 		break;
-	case 3:
+	case Down:
 		++(*currentColumn);
 		break;
 	}
@@ -74,17 +74,17 @@ void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColum
 int keyToQuaternary(char input, int quaternaryVector, int length) {
 	int temp = quaternaryVector;
 	switch (input) {
-	case 'D': case 'd': // >
-		temp = 0;
+	case 'D': case 'd':
+		temp = Right;
 		break;
-	case 'W': case 'w': // ^
-		temp = 1;
+	case 'W': case 'w':
+		temp = Up;
 		break;
-	case 'A': case 'a': // <
-		temp = 2;
+	case 'A': case 'a':
+		temp = Left;
 		break;
-	case 'S': case 's': // v
-		temp = 3;
+	case 'S': case 's':
+		temp = Down;
 		break;
 	}
 	if (length > 1) //the snake should not reverse its orientation when its length is bigger than 1
@@ -128,9 +128,7 @@ void placeFruit(bool& fruitExists, snake*& head) {
 			if (tempBody->next == nullptr) {
 				fruitRow = tempRow;
 				fruitColumn = tempColumn;
-				//setfillcolor(theme[themeNumber].foreground);
 				fruitRectangle(fruitRow, fruitColumn);
-				//setfillcolor(theme[themeNumber].accent);
 				fruitExists = true;
 			}
 		}

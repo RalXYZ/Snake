@@ -1,7 +1,7 @@
 ﻿#pragma once
 
 #include "maps.h"
-#include"resource.h"
+#include "resource.h"
 
 int mapNumber = 0;
 int spawnNumber = 0;
