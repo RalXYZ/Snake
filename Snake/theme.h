@@ -1,9 +1,10 @@
 ﻿#pragma once
 
+#include <vector>
+
+using std::vector;
 struct color {
 	int background;
 	int foreground;
-	int accent;
+	vector<int> accent;
 };
-
-extern color theme[20];

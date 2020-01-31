@@ -42,6 +42,7 @@ int main() {
 	int length = 1;
 	bool fruitExists = false;
 	bool hitBody = false;
+	bool hitWall = false;
 	bool firstLoop = true;
 
 	/*linked list initialization*/
@@ -68,15 +69,15 @@ int main() {
 
 		/*detect user keyboard input, pause or go, and judge the next location of the snake's head based on it*/
 		char key = '\0';
-		if (key = _kbhit()) {
+		if (_kbhit()) {
 			key = _getch();
 			if (key == ' ') {
 				paused();
 				_getch();
 				statistics(length);
 			}
-			else
-				headDirection = keyToQuaternary(key, headDirection, length);
+			else if (key == -32)
+				headDirection = keyToQuaternary(headDirection, length);
 		}
 
 		quaternaryToVector(headDirection, &currentRow, &currentColumn);
@@ -93,6 +94,7 @@ int main() {
 			sound.detach();
 		}
 		else if (map[currentColumn][currentRow] == 1) {
+			setfillcolor(theme[themeNumber].accent.front());
 			switch (headDirection) {
 			case Right:
 				rightRectangle(head->x, head->y);
@@ -108,6 +110,7 @@ int main() {
 				break;
 			}
 			break;
+			hitWall = true;
 		}
 		else {
 			for (snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
@@ -126,6 +129,8 @@ int main() {
 		if (fruitEaten == false) {
 			snake* temp = tail->previous;
 			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
+			if (tail->previous != nullptr)
+				clearrectangle(tail->previous->x * CUBE, tail->previous->y * CUBE, tail->previous->x * CUBE + CUBE, tail->previous->y * CUBE + CUBE);
 			delete tail;
 			tail = temp;
 			tail->next = nullptr;
@@ -136,13 +141,12 @@ int main() {
 		placeFruit(fruitExists, head);
 
 		/*output*/
-		for (snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
-			visualSnake(tempBody);
-		}
+		visualSnake(head);
 		if (fruitEaten || firstLoop)
 			statistics(length);
 
-		if (hitBody == true)
+		/*judge game over*/
+		if (hitBody)
 			break;
 
 		timePerFrame = accelerate(length);

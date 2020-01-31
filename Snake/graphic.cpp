@@ -76,12 +76,9 @@ void paused() {
 	smallFontsOutput(48, 16);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(54, 336, _T("GAME  PAUSED"));
-	settextcolor(theme[themeNumber].accent);
 
 	smallFontsOutput(20, 8);
-	settextcolor(theme[themeNumber].foreground);
 	outtextxy(46, 384, _T("PRESS ANY KEY TO CONTINUE"));
-	settextcolor(theme[themeNumber].accent);
 }
 
 void gameOver(int length) {
@@ -89,14 +86,13 @@ void gameOver(int length) {
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
 	smallFontsOutput(48, 18);
-	settextcolor(theme[themeNumber].accent);
+	settextcolor(theme[themeNumber].accent.front());
 	outtextxy(164 - ((int)log10(length) + 1) * 9, 336, s);
 
 	smallFontsOutput(20, 8);
 	outtextxy(14, 384, _T("GAME OVER"));
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(120, 384, _T("PRESS SPACE TO REPLAY"));
-	settextcolor(theme[themeNumber].accent);
 }
 
 void youWin() {
@@ -104,7 +100,6 @@ void youWin() {
 	settextcolor(theme[themeNumber].foreground);
 	setbkmode(TRANSPARENT);
 	outtextxy(100, 144, _T("YOU  WIN"));
-	settextcolor(theme[themeNumber].accent);
 	setbkmode(OPAQUE);
 }
 
@@ -115,12 +110,9 @@ void statistics(int length) {
 	smallFontsOutput(48, 18);
 	settextcolor(theme[themeNumber].foreground);
 	outtextxy(164 - ((int)log10(length) + 1) * 9, 336, s);
-	settextcolor(theme[themeNumber].accent);
 
 	smallFontsOutput(20, 8);
-	settextcolor(theme[themeNumber].foreground);
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
-	settextcolor(theme[themeNumber].accent);
 }
 
 extern maps  mapResource[];
@@ -130,6 +122,7 @@ void welcome(snake*& head) {
 	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
 
 	printMap();
+	setfillcolor(theme[themeNumber].accent.front());
 	dotRectangle(head->x, head->y);
 
 	smallFontsOutput(20, 8);
@@ -137,7 +130,7 @@ void welcome(snake*& head) {
 	outtextxy(2, 342, _T("PRESS ANY                     TO CHANGE THEME"));
 	outtextxy(38, 363, _T("PRESS      OR      TO CHANGE MAP"));
 	outtextxy(72, 384, _T("PRESS SPACE TO PLAY"));
-	settextcolor(theme[themeNumber].accent);
+	settextcolor(theme[themeNumber].accent.front());
 	outtextxy(98, 363, _T("<"));
 	outtextxy(146, 363, _T(">"));
 	outtextxy(98, 342, _T("NUMBER"));
@@ -146,25 +139,43 @@ void welcome(snake*& head) {
 		char temp = _getch();
 		if (temp == ' ')
 			break;
+		/*
 		else if (temp >= '0' && temp <= '9') {
 			themeNumber = temp - '0';
 			welcome(head);
 			break;
 		}
-		else if (temp == ',' || temp == '<') {
-			if (mapNumber == 0)
-				mapNumber = 6;
-			else
-				--mapNumber;
-			mapInput(mapResource[mapNumber].mapMacro);
-			welcome(head);
-			break;
-		}
-		else if (temp == '.' || temp == '>') {
-			(++mapNumber) %= 7;
-			mapInput(mapResource[mapNumber].mapMacro);
-			welcome(head);
-			break;
+		*/
+		else if (temp == -32) {
+			int direction = _getch();
+			if (direction == 72) { // ^
+				if (themeNumber == 0)
+					themeNumber = 6;
+				else
+					--themeNumber;
+				welcome(head);
+				break;
+			}
+			else if (direction == 80) { // v
+				(++themeNumber) %= 10; ///////////////////////////////////////
+				welcome(head);
+				break;
+			}
+			else if (direction == 75) { // <
+				if (mapNumber == 0)
+					mapNumber = 6;
+				else
+					--mapNumber;
+				mapInput(mapResource[mapNumber].mapMacro);
+				welcome(head);
+				break;
+			}
+			else if (direction == 77) { // >
+				(++mapNumber) %= 7;
+				mapInput(mapResource[mapNumber].mapMacro);
+				welcome(head);
+				break;
+			}
 		}
 	}
 }
@@ -187,5 +198,4 @@ void printMap() {
 		for (int j = 0; j < numberOfColumn + 2; j++)
 			if (map[i][j] == 0)
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
-	setfillcolor(theme[themeNumber].accent);
 }
