@@ -5,8 +5,6 @@
 #include <math.h>
 #include "graphic.h"
 
-extern int themeNumber;
-
 void upRightRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
@@ -70,7 +68,6 @@ void smallFontsOutput(int height, int width) {
 	settextstyle(&f);
 }
 
-extern int length;
 void paused() {
 	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
 	smallFontsOutput(48, 16);
@@ -115,8 +112,6 @@ void statistics(int length) {
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
 }
 
-extern maps  mapResource[];
-extern int mapNumber;
 void welcome(snake*& head) {
 	setbkcolor(theme[themeNumber].background);
 	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
@@ -150,14 +145,14 @@ void welcome(snake*& head) {
 			int direction = _getch();
 			if (direction == 72) { // ^
 				if (themeNumber == 0)
-					themeNumber = 6;
+					themeNumber = (int)theme.size() - 1;
 				else
 					--themeNumber;
 				welcome(head);
 				break;
 			}
 			else if (direction == 80) { // v
-				(++themeNumber) %= 10; ///////////////////////////////////////
+				(++themeNumber) %= (int)theme.size();
 				welcome(head);
 				break;
 			}
@@ -180,22 +175,18 @@ void welcome(snake*& head) {
 	}
 }
 
-extern int numberOfRow, numberOfColumn;
-extern int map[LENGTH + 2][LENGTH + 2];
 void printMap() {
 	setfillcolor(theme[themeNumber].foreground);
 	for (int i = 0; i < numberOfRow + 2; i++) {
 		for (int j = 0; j < numberOfColumn + 2; j++) {
-			if (map[i][j] == 1) {
-				//setfillstyle(BS_HATCHED, HS_DIAGCROSS);
+			if (mapCurrent[i][j] == 1) {
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
-				//setfillstyle(BS_SOLID);
 			}
 		}
 	}
 	setfillcolor(theme[themeNumber].background);
 	for (int i = 0; i < numberOfRow + 2; i++)
 		for (int j = 0; j < numberOfColumn + 2; j++)
-			if (map[i][j] == 0)
+			if (mapCurrent[i][j] == 0)
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
 }

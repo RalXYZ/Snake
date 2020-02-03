@@ -10,22 +10,17 @@
 #include "graphic.h"
 #include "maps.h"
 
-extern color theme[];
+extern vector<color> theme;
 extern int themeNumber;
-extern maps mapResource[];
+extern map mapResource[];
 extern int mapNumber;
 extern int spawnNumber;
-extern int map[LENGTH + 2][LENGTH + 2];
 
 bool windowCreated = false;
-
+int mapCurrent[LENGTH + 2][LENGTH + 2];
 int numberOfRow = 12, numberOfColumn = 12;
 int fruitRow, fruitColumn;
-double timePerFrame;
-double accelerate(int length);
-int keyToQuaternary(char input, int quaternaryVector, int length); //interpret the user input to "orientation value"
-void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn); //manipulate the position of the snake's head directly
-char coreToScreen(int number, int length, int quaternaryVector);
+DWORD timePerFrame;
 
 int main() {
 
@@ -33,10 +28,10 @@ int main() {
 	srand((unsigned)time(NULL));
 
 	/*data initialization*/
-	themeNumber = rand() % 9;
+	themeNumber = rand() % theme.size();
 	mapNumber = rand() % 7;
 	spawnNumber = rand() % 4;
-	int headDirection = mapResource[mapNumber].spawn[spawnNumber].headDirection;
+	Directions headDirection = mapResource[mapNumber].spawn[spawnNumber].headDirection;
 	int currentRow = mapResource[mapNumber].spawn[spawnNumber].spawnX,
 		currentColumn = mapResource[mapNumber].spawn[spawnNumber].spawnY;
 	int length = 1;
@@ -93,7 +88,7 @@ int main() {
 			std::thread sound(eatSound);
 			sound.detach();
 		}
-		else if (map[currentColumn][currentRow] == 1) {
+		else if (mapCurrent[currentColumn][currentRow] == 1) {
 			setfillcolor(theme[themeNumber].accent.front());
 			switch (headDirection) {
 			case Right:

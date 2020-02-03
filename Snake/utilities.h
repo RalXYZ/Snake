@@ -15,10 +15,18 @@ struct snake {
 };
 
 #include "graphic.h"
+
+extern vector<color> theme;
+extern int numberOfRow, numberOfColumn;
+extern int fruitRow, fruitColumn;
+extern int themeNumber;
+extern int themeNumber;
+extern int mapCurrent[LENGTH + 2][LENGTH + 2];
+
 void visualSnake(snake* tempBody);
 void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn);
-int keyToQuaternary(int quaternaryVector, int length);
+Directions keyToQuaternary(Directions quaternaryVector, int length);
 void mapInput(int mapMacro);
 void placeFruit(bool& fruitExists, snake*& head);
 void eatSound();
-double accelerate(int length);
+DWORD accelerate(int length);

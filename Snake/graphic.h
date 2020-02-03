@@ -6,7 +6,13 @@
 #include "utilities.h"
 #include "maps.h"
 
-extern color theme[20];
+extern vector<color> theme;
+extern map mapResource[];
+extern int mapNumber;
+extern int length;
+extern int themeNumber;
+extern int numberOfRow, numberOfColumn;
+extern int mapCurrent[LENGTH + 2][LENGTH + 2];
 
 void upRightRectangle(int y, int x);
 void upLeftRectangle(int y, int x);

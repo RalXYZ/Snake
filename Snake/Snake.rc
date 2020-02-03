@@ -91,8 +91,8 @@ IDI_ICON1               ICON                    "icon.ico"
 //
 
 VS_VERSION_INFO VERSIONINFO
- FILEVERSION 2,5,0,2
- PRODUCTVERSION 2,5,0,2
+ FILEVERSION 2,6,2,0
+ PRODUCTVERSION 2,6,2,0
  FILEFLAGSMASK 0x3fL
 #ifdef _DEBUG
  FILEFLAGS 0x1L
@@ -109,12 +109,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "RalXYZ"
             VALUE "FileDescription", "This is an implementation of the classic Nokia brick phone game, written with C++."
-            VALUE "FileVersion", "2.5.0.2"
+            VALUE "FileVersion", "2.6.2.0"
             VALUE "InternalName", "Snake.exe"
             VALUE "LegalCopyright", "Copyright RalXYZ(C) 2020"
             VALUE "OriginalFilename", "Snake.exe"
             VALUE "ProductName", "Snake"
-            VALUE "ProductVersion", "2.5.0.2"
+            VALUE "ProductVersion", "2.6.2.0"
         END
     END
     BLOCK "VarFileInfo"
