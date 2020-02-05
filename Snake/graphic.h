@@ -6,8 +6,6 @@
 #include "utilities.h"
 #include "maps.h"
 
-extern vector<color> theme;
-extern map mapResource[];
 extern int mapNumber;
 extern int length;
 extern int themeNumber;

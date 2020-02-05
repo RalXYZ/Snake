@@ -5,4 +5,4 @@
 #define LENGTH 40
 #define CUBE 24
 
-enum Directions { Right, Up, Left, Down };
+enum class Directions { Right, Up, Left, Down };

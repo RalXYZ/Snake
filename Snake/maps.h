@@ -1,6 +1,7 @@
 ﻿#pragma once
 
 #include "macros.h"
+#include "resource.h"
 #include <vector>
 
 struct map {
@@ -11,6 +12,8 @@ struct map {
 		int spawnX;
 		int spawnY;
 		Directions headDirection;
-	} spawn[4] = { {1, 1, Right}, {1, 12, Up}, {12, 12, Left}, {12, 1, Down} };
+	} spawn[4] = { {1, 1, Directions::Right}, {1, 12, Directions::Up}, {12, 12, Directions::Left}, {12, 1, Directions::Down} };
 	int mapMacro;
 };
+
+const map mapResource[]{ (IDR_MAP00), (IDR_MAP01), (IDR_MAP02), (IDR_MAP03), (IDR_MAP04), (IDR_MAP05), (IDR_MAP06) };

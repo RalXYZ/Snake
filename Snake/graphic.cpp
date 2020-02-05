@@ -177,13 +177,11 @@ void welcome(snake*& head) {
 
 void printMap() {
 	setfillcolor(theme[themeNumber].foreground);
-	for (int i = 0; i < numberOfRow + 2; i++) {
-		for (int j = 0; j < numberOfColumn + 2; j++) {
-			if (mapCurrent[i][j] == 1) {
+	for (int i = 0; i < numberOfRow + 2; i++)
+		for (int j = 0; j < numberOfColumn + 2; j++)
+			if (mapCurrent[i][j] == 1)
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
-			}
-		}
-	}
+
 	setfillcolor(theme[themeNumber].background);
 	for (int i = 0; i < numberOfRow + 2; i++)
 		for (int j = 0; j < numberOfColumn + 2; j++)

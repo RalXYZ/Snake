@@ -10,9 +10,7 @@
 #include "graphic.h"
 #include "maps.h"
 
-extern vector<color> theme;
 extern int themeNumber;
-extern map mapResource[];
 extern int mapNumber;
 extern int spawnNumber;
 
@@ -31,9 +29,10 @@ int main() {
 	themeNumber = rand() % theme.size();
 	mapNumber = rand() % 7;
 	spawnNumber = rand() % 4;
-	Directions headDirection = mapResource[mapNumber].spawn[spawnNumber].headDirection;
-	int currentRow = mapResource[mapNumber].spawn[spawnNumber].spawnX,
-		currentColumn = mapResource[mapNumber].spawn[spawnNumber].spawnY;
+	auto spawnCurrent = mapResource[mapNumber].spawn[spawnNumber];
+	Directions headDirection = spawnCurrent.headDirection;
+	int currentRow = spawnCurrent.spawnX,
+		currentColumn = spawnCurrent.spawnY;
 	int length = 1;
 	bool fruitExists = false;
 	bool hitBody = false;
@@ -42,8 +41,8 @@ int main() {
 
 	/*linked list initialization*/
 	snake* oldBody = new snake;
-	oldBody->x = mapResource[mapNumber].spawn[spawnNumber].spawnX;
-	oldBody->y = mapResource[mapNumber].spawn[spawnNumber].spawnY;
+	oldBody->x = spawnCurrent.spawnX;
+	oldBody->y = spawnCurrent.spawnY;
 	oldBody->next = nullptr;
 	snake* head = oldBody;
 	snake* tail = oldBody;
@@ -91,21 +90,21 @@ int main() {
 		else if (mapCurrent[currentColumn][currentRow] == 1) {
 			setfillcolor(theme[themeNumber].accent.front());
 			switch (headDirection) {
-			case Right:
+			case Directions::Right:
 				rightRectangle(head->x, head->y);
 				break;
-			case Up:
+			case Directions::Up:
 				upRectangle(head->x, head->y);
 				break;
-			case Left:
+			case Directions::Left:
 				leftRectangle(head->x, head->y);
 				break;
-			case Down:
+			case Directions::Down:
 				downRectangle(head->x, head->y);
 				break;
 			}
-			break;
 			hitWall = true;
+			break;
 		}
 		else {
 			for (snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)

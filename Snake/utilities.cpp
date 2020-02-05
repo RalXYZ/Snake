@@ -54,18 +54,18 @@ void visualSnake(snake* head) {
 	}
 }
 
-void quaternaryToVector(int quaternaryVector, int* currentRow, int* currentColumn) {
+void quaternaryToVector(Directions quaternaryVector, int* currentRow, int* currentColumn) {
 	switch (quaternaryVector) {
-	case Right:
+	case Directions::Right:
 		++(*currentRow);
 		break;
-	case Left:
+	case Directions::Left:
 		--(*currentRow);
 		break;
-	case Up:
+	case Directions::Up:
 		--(*currentColumn);
 		break;
-	case Down:
+	case Directions::Down:
 		++(*currentColumn);
 		break;
 	}
@@ -75,20 +75,20 @@ Directions keyToQuaternary(Directions quaternaryVector, int length) {
 	Directions temp = quaternaryVector;
 	switch (_getch()) {
 	case 77:
-		temp = Right;
+		temp = Directions::Right;
 		break;
 	case 72:
-		temp = Up;
+		temp = Directions::Up;
 		break;
 	case 75:
-		temp = Left;
+		temp = Directions::Left;
 		break;
 	case 80:
-		temp = Down;
+		temp = Directions::Down;
 		break;
 	}
 	if (length > 1) //the snake should not reverse its orientation when its length is bigger than 1
-		if ((quaternaryVector - temp) % 2 == 0)
+		if (((int)quaternaryVector - (int)temp) % 2 == 0)
 			return quaternaryVector;
 	return temp;
 }
@@ -99,7 +99,7 @@ void mapInput(int mapMacro) {
 	char* mapElement = (char*)LockResource(hMemory);
 	int str_size = SizeofResource(nullptr, hResource);
 	if (!hResource) {
-		printf("Unable to load map file! %d", mapMacro);
+		std::cout << "Unable to load map file! " << mapMacro;
 		exit(1);
 	}
 	for (int i = 0; i < 14; i++) {
@@ -134,8 +134,4 @@ void placeFruit(bool& fruitExists, snake*& head) {
 
 void eatSound() {
 	//TODO find a proper sound fx
-}
-
-DWORD accelerate(int length) {
-	return (DWORD)(5.0 * exp(3.0 - 0.05 * length) + 200);
 }
