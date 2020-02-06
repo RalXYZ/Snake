@@ -3,7 +3,6 @@
 #include <easyx.h>
 #include <windows.h>
 #include <conio.h>
-#include <string>
 #include <thread>
 #include "resource.h"
 #include "utilities.h"
@@ -26,10 +25,10 @@ int main() {
 	srand((unsigned)time(NULL));
 
 	/*data initialization*/
-	themeNumber = rand() % theme.size();
-	mapNumber = rand() % 7;
+	themeNumber = rand() % ThemeSize;
+	mapNumber = rand() % MapResourceSize;
 	spawnNumber = rand() % 4;
-	auto spawnCurrent = mapResource[mapNumber].spawn[spawnNumber];
+	auto spawnCurrent = MapResource[mapNumber].spawn[spawnNumber];
 	Directions headDirection = spawnCurrent.headDirection;
 	int currentRow = spawnCurrent.spawnX,
 		currentColumn = spawnCurrent.spawnY;
@@ -54,7 +53,7 @@ int main() {
 	}
 	setlinestyle(PS_NULL);
 
-	mapInput(mapResource[mapNumber].mapMacro);
+	mapInput(MapResource[mapNumber].mapMacro);
 
 	welcome(head);
 
@@ -74,7 +73,7 @@ int main() {
 				headDirection = keyToQuaternary(headDirection, length);
 		}
 
-		quaternaryToVector(headDirection, &currentRow, &currentColumn);
+		quaternaryToVector(headDirection, currentRow, currentColumn);
 
 		/*place food randomly until the food is not located on the snake's body*/
 		placeFruit(fruitExists, head);
@@ -88,7 +87,7 @@ int main() {
 			sound.detach();
 		}
 		else if (mapCurrent[currentColumn][currentRow] == 1) {
-			setfillcolor(theme[themeNumber].accent.front());
+			setfillcolor(Theme[themeNumber].accent.front());
 			switch (headDirection) {
 			case Directions::Right:
 				rightRectangle(head->x, head->y);

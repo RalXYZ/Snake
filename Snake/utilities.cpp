@@ -4,9 +4,9 @@
 
 void visualSnake(snake* head) {
 	int i = 0;
-	size_t size = theme[themeNumber].accent.size();
+	size_t size = Theme[themeNumber].accent.size();
 	for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
-		setfillcolor(theme[themeNumber].accent.at(i % size));
+		setfillcolor(Theme[themeNumber].accent.at(i % size));
 		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
 			if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
 				verticalRectangle(tempBody->x, tempBody->y);
@@ -54,36 +54,36 @@ void visualSnake(snake* head) {
 	}
 }
 
-void quaternaryToVector(Directions quaternaryVector, int* currentRow, int* currentColumn) {
+void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& currentColumn) {
 	switch (quaternaryVector) {
 	case Directions::Right:
-		++(*currentRow);
+		++currentRow;
 		break;
 	case Directions::Left:
-		--(*currentRow);
+		--currentRow;
 		break;
 	case Directions::Up:
-		--(*currentColumn);
+		--currentColumn;
 		break;
 	case Directions::Down:
-		++(*currentColumn);
+		++currentColumn;
 		break;
 	}
 }
 
 Directions keyToQuaternary(Directions quaternaryVector, int length) {
 	Directions temp = quaternaryVector;
-	switch (_getch()) {
-	case 77:
+	switch ((Keyboard)_getch()) {
+	case Keyboard::Right:
 		temp = Directions::Right;
 		break;
-	case 72:
+	case Keyboard::Up:
 		temp = Directions::Up;
 		break;
-	case 75:
+	case Keyboard::Left:
 		temp = Directions::Left;
 		break;
-	case 80:
+	case Keyboard::Down:
 		temp = Directions::Down;
 		break;
 	}
@@ -113,7 +113,7 @@ void mapInput(int mapMacro) {
 }
 
 void placeFruit(bool& fruitExists, snake*& head) {
-	setfillcolor(theme[themeNumber].foreground);
+	setfillcolor(Theme[themeNumber].foreground);
 	while (fruitExists == false) {
 		int tempRow = rand() % numberOfRow + 1;
 		int tempColumn = rand() % numberOfColumn + 1;

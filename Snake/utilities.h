@@ -23,7 +23,7 @@ extern int themeNumber;
 extern int mapCurrent[LENGTH + 2][LENGTH + 2];
 
 void visualSnake(snake* tempBody);
-void quaternaryToVector(Directions quaternaryVector, int* currentRow, int* currentColumn);
+void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& currentColumn);
 Directions keyToQuaternary(Directions quaternaryVector, int length);
 void mapInput(int mapMacro);
 void placeFruit(bool& fruitExists, snake*& head);

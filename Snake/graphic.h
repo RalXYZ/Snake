@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#include <easyx.h>
+#include <conio.h>
+#include <math.h>
 #include "macros.h"
 #include "theme.h"
 #include "macros.h"

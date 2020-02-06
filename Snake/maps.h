@@ -2,7 +2,6 @@
 
 #include "macros.h"
 #include "resource.h"
-#include <vector>
 
 struct map {
 	map(int macro) {
@@ -16,4 +15,5 @@ struct map {
 	int mapMacro;
 };
 
-const map mapResource[]{ (IDR_MAP00), (IDR_MAP01), (IDR_MAP02), (IDR_MAP03), (IDR_MAP04), (IDR_MAP05), (IDR_MAP06) };
+const map MapResource[]{ (IDR_MAP00), (IDR_MAP01), (IDR_MAP02), (IDR_MAP03), (IDR_MAP04), (IDR_MAP05), (IDR_MAP06) };
+const int MapResourceSize = sizeof(MapResource) / sizeof(*MapResource);
