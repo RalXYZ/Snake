@@ -39,12 +39,12 @@ int main() {
 	bool firstLoop = true;
 
 	/*linked list initialization*/
-	snake* oldBody = new snake;
+	Snake* oldBody = new Snake;
 	oldBody->x = spawnCurrent.spawnX;
 	oldBody->y = spawnCurrent.spawnY;
 	oldBody->next = nullptr;
-	snake* head = oldBody;
-	snake* tail = oldBody;
+	Snake* head = oldBody;
+	Snake* tail = oldBody;
 
 	/*window initialization*/
 	if (windowCreated == false) {
@@ -60,7 +60,7 @@ int main() {
 	while (true) {
 		bool fruitEaten = false;
 
-		/*detect user keyboard input, pause or go, and judge the next location of the snake's head based on it*/
+		/*detect user keyboard input, pause or go, and judge the next location of the Snake's head based on it*/
 		char key = '\0';
 		if (_kbhit()) {
 			key = _getch();
@@ -75,10 +75,10 @@ int main() {
 
 		quaternaryToVector(headDirection, currentRow, currentColumn);
 
-		/*place food randomly until the food is not located on the snake's body*/
+		/*place food randomly until the food is not located on the Snake's body*/
 		placeFruit(fruitExists, head);
 
-		/*detect what exists at the next position where the snake's head locates*/
+		/*detect what exists at the next position where the Snake's head locates*/
 		if (currentRow == fruitRow && currentColumn == fruitColumn) {
 			++length;
 			fruitExists = false;
@@ -106,13 +106,13 @@ int main() {
 			break;
 		}
 		else {
-			for (snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
+			for (Snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
 				if (tempBody->x == currentRow && tempBody->y == currentColumn)
 					hitBody = true;
 		}
 
-		/*the movement of snake*/
-		snake* newBody = new snake;
+		/*the movement of Snake*/
+		Snake* newBody = new Snake;
 		newBody->x = currentRow;
 		newBody->y = currentColumn;
 		newBody->previous = nullptr;
@@ -120,7 +120,7 @@ int main() {
 		head = newBody;
 		oldBody->previous = newBody;
 		if (fruitEaten == false) {
-			snake* temp = tail->previous;
+			Snake* temp = tail->previous;
 			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
 			if (tail->previous != nullptr)
 				clearrectangle(tail->previous->x * CUBE, tail->previous->y * CUBE, tail->previous->x * CUBE + CUBE, tail->previous->y * CUBE + CUBE);
@@ -130,7 +130,7 @@ int main() {
 		}
 		oldBody = newBody;
 
-		/*place food randomly until the food is not located on the snake's body*/
+		/*place food randomly until the food is not located on the Snake's body*/
 		placeFruit(fruitExists, head);
 
 		/*output*/
@@ -148,9 +148,9 @@ int main() {
 		firstLoop = false;
 	}
 
-	/*prevent memory leak, delete the linked list of snake*/
-	for (snake* i = head; i != nullptr; ) {
-		snake* temp = i->next;
+	/*prevent memory leak, delete the linked list of Snake*/
+	for (Snake* i = head; i != nullptr; ) {
+		Snake* temp = i->next;
 		delete i;
 		i = temp;
 	}

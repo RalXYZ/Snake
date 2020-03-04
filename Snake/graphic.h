@@ -33,5 +33,5 @@ void paused();
 void gameOver(int length);
 void youWin();
 void statistics(int length);
-void welcome(snake*& head);
+void welcome(Snake*& head);
 void printMap();

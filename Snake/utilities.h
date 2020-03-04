@@ -7,11 +7,12 @@
 #include "macros.h"
 #include "resource.h"
 
-struct snake {
+class Snake {
+public:
 	int x = 0;
 	int y = 0;
-	snake* previous = nullptr;
-	snake* next = nullptr;
+	Snake* previous = nullptr;
+	Snake* next = nullptr;
 };
 
 #include "graphic.h"
@@ -22,13 +23,10 @@ extern int themeNumber;
 extern int themeNumber;
 extern int mapCurrent[LENGTH + 2][LENGTH + 2];
 
-void visualSnake(snake* tempBody);
+void visualSnake(Snake* tempBody);
 void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& currentColumn);
 Directions keyToQuaternary(Directions quaternaryVector, int length);
 void mapInput(int mapMacro);
-void placeFruit(bool& fruitExists, snake*& head);
+void placeFruit(bool& fruitExists, Snake*& head);
 void eatSound();
-
-inline DWORD accelerate(int length) {
-	return DWORD(5.0 * exp(3.0 - 0.05 * length) + 200);
-}
+inline DWORD accelerate(int length) { return DWORD(5.0 * exp(3.0 - 0.05 * length) + 200); }

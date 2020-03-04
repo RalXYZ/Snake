@@ -2,10 +2,10 @@
 
 #include "utilities.h"
 
-void visualSnake(snake* head) {
+void visualSnake(Snake* head) {
 	int i = 0;
 	size_t size = Theme[themeNumber].accent.size();
-	for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
+	for (struct Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
 		setfillcolor(Theme[themeNumber].accent.at(i % size));
 		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
 			if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
@@ -87,7 +87,7 @@ Directions keyToQuaternary(Directions quaternaryVector, int length) {
 		temp = Directions::Down;
 		break;
 	}
-	if (length > 1) //the snake should not reverse its orientation when its length is bigger than 1
+	if (length > 1) //the Snake should not reverse its orientation when its length is bigger than 1
 		if (((int)quaternaryVector - (int)temp) % 2 == 0)
 			return quaternaryVector;
 	return temp;
@@ -112,14 +112,14 @@ void mapInput(int mapMacro) {
 	}
 }
 
-void placeFruit(bool& fruitExists, snake*& head) {
+void placeFruit(bool& fruitExists, Snake*& head) {
 	setfillcolor(Theme[themeNumber].foreground);
 	while (fruitExists == false) {
 		int tempRow = rand() % numberOfRow + 1;
 		int tempColumn = rand() % numberOfColumn + 1;
 		if (mapCurrent[tempColumn][tempRow] == 1)
 			continue;
-		for (struct snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+		for (struct Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
 			if (tempBody->x == tempRow && tempBody->y == tempColumn)
 				break;
 			if (tempBody->next == nullptr) {

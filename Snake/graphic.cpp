@@ -109,7 +109,7 @@ void statistics(int length) {
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
 }
 
-void welcome(snake*& head) {
+void welcome(Snake*& head) {
 	setbkcolor(Theme[themeNumber].background);
 	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
 
