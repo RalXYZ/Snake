@@ -1,9 +1,12 @@
-<p align="center">
-<img src = "https://i.loli.net/2020/01/27/V2JS9e3rocCIgwL.png">
-</p>
-  
 # Snake 
-This is an implementation of the classic Nokia brick phone game **Snake(贪吃蛇)**, written with C.
+This is an implementation of the classic Nokia brick phone game **Snake(贪吃蛇)**, written with C.  
+
+![issues](https://img.shields.io/github/issues/RalXYZ/Snake)
+![forks](https://img.shields.io/github/forks/RalXYZ/Snake)
+![stars](https://img.shields.io/github/stars/RalXYZ/Snake)
+![standard](https://img.shields.io/badge/standard-C%2B%2B11-blue)
+![license](https://img.shields.io/github/license/RalXYZ/Snake)
+![CodeFactor](https://www.codefactor.io/repository/github/ralxyz/snake/badge)
 
 ## Before playing
 - **Steer** the snake with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>  
@@ -34,3 +37,7 @@ The following details the 10 themes and 7 maps built into the game, designed by 
 | Snow Owl | Hoopoe | Plumage | Panda | Halloween |
 | :---: | :---: | :---: | :---: | :---: |
 | ![image.png](https://i.loli.net/2020/01/24/XpNBQ8db7zjc4Em.png) | ![image.png](https://i.loli.net/2020/01/24/kCwdrKLqPVIYnyZ.png) | ![image.png](https://i.loli.net/2020/01/24/8ZOkTDMwUHGLql5.png) | ![image.png](https://i.loli.net/2020/01/24/5bl7u4SRnzgkOwa.png) | ![image.png](https://i.loli.net/2020/01/23/bPGY8m6ZrKfWokO.png) |
+
+<p align="center">
+<img src = "https://i.loli.net/2020/01/27/V2JS9e3rocCIgwL.png">
+</p>
