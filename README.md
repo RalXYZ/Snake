@@ -10,9 +10,9 @@ This is an implementation of the classic Nokia brick phone game **Snake(贪吃�
 ![CodeFactor](https://www.codefactor.io/repository/github/ralxyz/snake/badge)
 
 ## Before playing
-- **Steer** the snake with <kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd>  
-- When you **hit** a wall or **bite** your own body, game over
-- The **map** and **theme** changes randomly every time you play the game  
+- **Steer** the snake with <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd>  
+- When you **hit** a wall or **bite** your own body, game over.
+- The **map** and **theme** changes randomly every time you play the game  .
 
 ## Fetures
 - [x] Graphical user interface (GUI)
