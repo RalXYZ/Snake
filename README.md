@@ -1,10 +1,11 @@
 # Snake 
-This is an implementation of the classic Nokia brick phone game **Snake(贪吃蛇)**, written with C.  
+This is an implementation of the classic Nokia brick phone game **Snake(贪吃蛇)**, written with C++.  
 
 ![issues](https://img.shields.io/github/issues/RalXYZ/Snake)
 ![forks](https://img.shields.io/github/forks/RalXYZ/Snake)
 ![stars](https://img.shields.io/github/stars/RalXYZ/Snake)
-![standard](https://img.shields.io/badge/standard-C%2B%2B11-blue)
+![C++](https://img.shields.io/badge/C%2B%2B-11%20%7C%2014-blue)
+![EasyX](https://img.shields.io/badge/EasyX-20200315(beta)-yellow)
 ![license](https://img.shields.io/github/license/RalXYZ/Snake)
 ![CodeFactor](https://www.codefactor.io/repository/github/ralxyz/snake/badge)
 
