@@ -2,7 +2,7 @@
 
 #include <easyx.h>
 #include <conio.h>
-#include <math.h>
+#include <cmath>
 #include "macros.h"
 #include "theme.h"
 #include "macros.h"
@@ -15,18 +15,22 @@ extern int themeNumber;
 extern int numberOfRow, numberOfColumn;
 extern int mapCurrent[LENGTH + 2][LENGTH + 2];
 
-void upRightRectangle(int y, int x);
-void upLeftRectangle(int y, int x);
-void downRightRectangle(int y, int x);
-void downLeftRectangle(int y, int x);
-void downRectangle(int y, int x);
-void upRectangle(int y, int x);
-void rightRectangle(int y, int x);
-void leftRectangle(int y, int x);
-void verticalRectangle(int y, int x);
-void horizontalRectangle(int y, int x);
-void dotRectangle(int y, int x);
-void fruitRectangle(int y, int x);
+class Rectangle {
+public:
+	static void upRightRectangle(int y, int x);
+	static void upLeftRectangle(int y, int x);
+	static void downRightRectangle(int y, int x);
+	static void downLeftRectangle(int y, int x);
+	static void downRectangle(int y, int x);
+	static void upRectangle(int y, int x);
+	static void rightRectangle(int y, int x);
+	static void leftRectangle(int y, int x);
+	static void verticalRectangle(int y, int x);
+	static void horizontalRectangle(int y, int x);
+	static void dotRectangle(int y, int x);
+	static void fruitRectangle(int y, int x);
+};
+
 
 void smallFontsOutput(int height, int width);
 void paused();

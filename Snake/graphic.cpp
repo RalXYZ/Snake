@@ -2,55 +2,55 @@
 
 #include "graphic.h"
 
-void upRightRectangle(int y, int x) {
+void Rectangle::upRightRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
-void upLeftRectangle(int y, int x) {
+void Rectangle::upLeftRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
-void downRightRectangle(int y, int x) {
+void Rectangle::downRightRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
-void downLeftRectangle(int y, int x) {
+void Rectangle::downLeftRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
 	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
-void downRectangle(int y, int x) {
+void Rectangle::downRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
 }
 
-void upRectangle(int y, int x) {
+void Rectangle::upRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 }
 
-void rightRectangle(int y, int x) {
+void Rectangle::rightRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
-void leftRectangle(int y, int x) {
+void Rectangle::leftRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
-void verticalRectangle(int y, int x) {
+void Rectangle::verticalRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 24);
 }
 
-void horizontalRectangle(int y, int x) {
+void Rectangle::horizontalRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
 }
 
-void dotRectangle(int y, int x) {
+void Rectangle::dotRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
 }
 
-void fruitRectangle(int y, int x) {
+void Rectangle::fruitRectangle(int y, int x) {
 	solidrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
 }
 
@@ -115,7 +115,7 @@ void welcome(Snake*& head) {
 
 	printMap();
 	setfillcolor(Theme[themeNumber].accent.front());
-	dotRectangle(head->x, head->y);
+	Rectangle::dotRectangle(head->x, head->y);
 
 	smallFontsOutput(20, 8);
 	settextcolor(Theme[themeNumber].foreground);
