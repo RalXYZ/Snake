@@ -12,7 +12,7 @@ This is an implementation of the classic Nokia brick phone game **Snake(贪吃�
 ## Before playing
 - **Steer** the snake with <kbd>↑</kbd><kbd>↓</kbd><kbd>←</kbd><kbd>→</kbd>  
 - When you **hit** a wall or **bite** your own body, game over.
-- The **map** and **theme** changes randomly every time you play the game  .
+- The **map** and **theme** changes randomly every time you play the game.  
 
 ## Fetures
 - [x] Graphical user interface (GUI)
