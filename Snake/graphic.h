@@ -15,22 +15,20 @@ extern int themeNumber;
 extern int numberOfRow, numberOfColumn;
 extern int mapCurrent[LENGTH + 2][LENGTH + 2];
 
-class Rectangle {
-public:
-	static void upRightRectangle(int y, int x);
-	static void upLeftRectangle(int y, int x);
-	static void downRightRectangle(int y, int x);
-	static void downLeftRectangle(int y, int x);
-	static void downRectangle(int y, int x);
-	static void upRectangle(int y, int x);
-	static void rightRectangle(int y, int x);
-	static void leftRectangle(int y, int x);
-	static void verticalRectangle(int y, int x);
-	static void horizontalRectangle(int y, int x);
-	static void dotRectangle(int y, int x);
-	static void fruitRectangle(int y, int x);
+namespace drawRectangle {
+	void upRight(int y, int x);
+	void upLeft(int y, int x);
+	void downRight(int y, int x);
+	void downLeft(int y, int x);
+	void down(int y, int x);
+	void up(int y, int x);
+	void right(int y, int x);
+	void left(int y, int x);
+	void vertical(int y, int x);
+	void horizontal(int y, int x);
+	void dot(int y, int x);
+	void fruit(int y, int x);
 };
-
 
 void smallFontsOutput(int height, int width);
 void paused();

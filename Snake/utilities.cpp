@@ -9,46 +9,46 @@ void visualSnake(Snake* head) {
 		setfillcolor(Theme[themeNumber].accent.at(i % size));
 		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
 			if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
-				Rectangle::verticalRectangle(tempBody->x, tempBody->y);
+				drawRectangle::vertical(tempBody->x, tempBody->y);
 			else if (tempBody->y == tempBody->previous->y && tempBody->y == tempBody->next->y)
-				Rectangle::horizontalRectangle(tempBody->x, tempBody->y);
+				drawRectangle::horizontal(tempBody->x, tempBody->y);
 			else {
 				if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y + 1
 					|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y + 1)
-					Rectangle::upLeftRectangle(tempBody->x, tempBody->y);
+					drawRectangle::upLeft(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y - 1
 					|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y - 1)
-					Rectangle::downRightRectangle(tempBody->x, tempBody->y);
+					drawRectangle::downRight(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y - 1
 					|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y - 1)
-					Rectangle::downLeftRectangle(tempBody->x, tempBody->y);
+					drawRectangle::downLeft(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y + 1
 					|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y + 1)
-					Rectangle::upRightRectangle(tempBody->x, tempBody->y);
+					drawRectangle::upRight(tempBody->x, tempBody->y);
 			}
 		}
 		else if (tempBody->previous == nullptr && tempBody->next == nullptr)
-			Rectangle::dotRectangle(tempBody->x, tempBody->y);
+			drawRectangle::dot(tempBody->x, tempBody->y);
 		else {
 			if (tempBody->previous == nullptr) { //head
 				if (tempBody->x == tempBody->next->x + 1)
-					Rectangle::leftRectangle(tempBody->x, tempBody->y);
+					drawRectangle::left(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x - 1)
-					Rectangle::rightRectangle(tempBody->x, tempBody->y);
+					drawRectangle::right(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->next->y + 1)
-					Rectangle::upRectangle(tempBody->x, tempBody->y);
+					drawRectangle::up(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->next->y - 1)
-					Rectangle::downRectangle(tempBody->x, tempBody->y);
+					drawRectangle::down(tempBody->x, tempBody->y);
 			}
 			if (tempBody->next == nullptr) { //tail
 				if (tempBody->x == tempBody->previous->x + 1)
-					Rectangle::leftRectangle(tempBody->x, tempBody->y);
+					drawRectangle::left(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->previous->x - 1)
-					Rectangle::rightRectangle(tempBody->x, tempBody->y);
+					drawRectangle::right(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->previous->y + 1)
-					Rectangle::upRectangle(tempBody->x, tempBody->y);
+					drawRectangle::up(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->previous->y - 1)
-					Rectangle::downRectangle(tempBody->x, tempBody->y);
+					drawRectangle::down(tempBody->x, tempBody->y);
 			}
 		}
 	}
@@ -125,7 +125,7 @@ void placeFruit(bool& fruitExists, Snake*& head) {
 			if (tempBody->next == nullptr) {
 				fruitRow = tempRow;
 				fruitColumn = tempColumn;
-				Rectangle::fruitRectangle(fruitRow, fruitColumn);
+				drawRectangle::fruit(fruitRow, fruitColumn);
 				fruitExists = true;
 			}
 		}

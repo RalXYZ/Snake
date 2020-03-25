@@ -2,56 +2,59 @@
 
 #include "graphic.h"
 
-void Rectangle::upRightRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-}
+namespace drawRectangle {
+	void upRight(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+	}
 
-void Rectangle::upLeftRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
-	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-}
+	void upLeft(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+	}
 
-void Rectangle::downRightRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-}
+	void downRight(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+	}
 
-void Rectangle::downLeftRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
-	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-}
+	void downLeft(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+	}
 
-void Rectangle::downRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
-}
+	void down(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+	}
 
-void Rectangle::upRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
-}
+	void up(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+	}
 
-void Rectangle::rightRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-}
+	void right(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+	}
 
-void Rectangle::leftRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-}
+	void left(const int y, const int x) {
+		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+	}
 
-void Rectangle::verticalRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 24);
-}
+	void vertical(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 24);
+	}
 
-void Rectangle::horizontalRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-}
+	void horizontal(const int y, const int x) {
+		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+	}
 
-void Rectangle::dotRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-}
+	void dot(const int y, const int x) {
+		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+	}
 
-void Rectangle::fruitRectangle(int y, int x) {
-	solidrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
+	void fruit(const int y, const int x) {
+		solidrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
+	}
+
 }
 
 void smallFontsOutput(int height, int width) {
@@ -115,7 +118,7 @@ void welcome(Snake*& head) {
 
 	printMap();
 	setfillcolor(Theme[themeNumber].accent.front());
-	Rectangle::dotRectangle(head->x, head->y);
+	drawRectangle::dot(head->x, head->y);
 
 	smallFontsOutput(20, 8);
 	settextcolor(Theme[themeNumber].foreground);

@@ -90,16 +90,16 @@ int main() {
 			setfillcolor(Theme[themeNumber].accent.front());
 			switch (headDirection) {
 			case Directions::Right:
-				Rectangle::rightRectangle(head->x, head->y);
+				drawRectangle::right(head->x, head->y);
 				break;
 			case Directions::Up:
-				Rectangle::upRectangle(head->x, head->y);
+				drawRectangle::up(head->x, head->y);
 				break;
 			case Directions::Left:
-				Rectangle::leftRectangle(head->x, head->y);
+				drawRectangle::left(head->x, head->y);
 				break;
 			case Directions::Down:
-				Rectangle::downRectangle(head->x, head->y);
+				drawRectangle::down(head->x, head->y);
 				break;
 			}
 			hitWall = true;
