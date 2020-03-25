@@ -84,7 +84,7 @@ void gameOver(int length) {
 	wsprintf(s, L"%d", length);
 	smallFontsOutput(48, 18);
 	settextcolor(Theme[themeNumber].accent.front());
-	outtextxy(164 - ((int)log10(length) + 1) * 9, 336, s);
+	outtextxy(164 - (int(log10(length)) + 1) * 9, 336, s);
 
 	smallFontsOutput(20, 8);
 	outtextxy(14, 384, _T("GAME OVER"));
@@ -182,4 +182,76 @@ void printMap() {
 		for (int j = 0; j < numberOfColumn + 2; j++)
 			if (mapCurrent[i][j] == 0)
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
+}
+
+void visualSnake(Snake* head) {
+	int i = 0;
+	size_t size = Theme[themeNumber].accent.size();
+	for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
+		setfillcolor(Theme[themeNumber].accent.at(i % size));
+		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
+			if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
+				drawRectangle::vertical(tempBody->x, tempBody->y);
+			else if (tempBody->y == tempBody->previous->y && tempBody->y == tempBody->next->y)
+				drawRectangle::horizontal(tempBody->x, tempBody->y);
+			else {
+				if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y + 1
+					|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y + 1)
+					drawRectangle::upLeft(tempBody->x, tempBody->y);
+				else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y - 1
+					|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y - 1)
+					drawRectangle::downRight(tempBody->x, tempBody->y);
+				else if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y - 1
+					|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y - 1)
+					drawRectangle::downLeft(tempBody->x, tempBody->y);
+				else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y + 1
+					|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y + 1)
+					drawRectangle::upRight(tempBody->x, tempBody->y);
+			}
+		}
+		else if (tempBody->previous == nullptr && tempBody->next == nullptr)
+			drawRectangle::dot(tempBody->x, tempBody->y);
+		else {
+			if (tempBody->previous == nullptr) { //head
+				if (tempBody->x == tempBody->next->x + 1)
+					drawRectangle::left(tempBody->x, tempBody->y);
+				else if (tempBody->x == tempBody->next->x - 1)
+					drawRectangle::right(tempBody->x, tempBody->y);
+				else if (tempBody->y == tempBody->next->y + 1)
+					drawRectangle::up(tempBody->x, tempBody->y);
+				else if (tempBody->y == tempBody->next->y - 1)
+					drawRectangle::down(tempBody->x, tempBody->y);
+			}
+			if (tempBody->next == nullptr) { //tail
+				if (tempBody->x == tempBody->previous->x + 1)
+					drawRectangle::left(tempBody->x, tempBody->y);
+				else if (tempBody->x == tempBody->previous->x - 1)
+					drawRectangle::right(tempBody->x, tempBody->y);
+				else if (tempBody->y == tempBody->previous->y + 1)
+					drawRectangle::up(tempBody->x, tempBody->y);
+				else if (tempBody->y == tempBody->previous->y - 1)
+					drawRectangle::down(tempBody->x, tempBody->y);
+			}
+		}
+	}
+}
+
+void placeFruit(bool& fruitExists, Snake*& head) {
+	setfillcolor(Theme[themeNumber].foreground);
+	while (fruitExists == false) {
+		int tempRow = rand() % numberOfRow + 1;
+		int tempColumn = rand() % numberOfColumn + 1;
+		if (mapCurrent[tempColumn][tempRow] == 1)
+			continue;
+		for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+			if (tempBody->x == tempRow && tempBody->y == tempColumn)
+				break;
+			if (tempBody->next == nullptr) {
+				fruitRow = tempRow;
+				fruitColumn = tempColumn;
+				drawRectangle::fruit(fruitRow, fruitColumn);
+				fruitExists = true;
+			}
+		}
+	}
 }

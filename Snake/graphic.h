@@ -37,3 +37,5 @@ void youWin();
 void statistics(int length);
 void welcome(Snake*& head);
 void printMap();
+void visualSnake(Snake* tempBody);
+void placeFruit(bool& fruitExists, Snake*& head);
