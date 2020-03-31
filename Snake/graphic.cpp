@@ -57,7 +57,7 @@ namespace drawRectangle {
 
 }
 
-void smallFontsOutput(int height, int width) {
+void WordFormat::smallFontsOutput(const int height, const int width) {
 	LOGFONT f;
 	gettextstyle(&f);
 	f.lfHeight = height;
@@ -68,7 +68,7 @@ void smallFontsOutput(int height, int width) {
 	settextstyle(&f);
 }
 
-void paused() {
+void Word::paused() {
 	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
 	smallFontsOutput(48, 16);
 	settextcolor(Theme[themeNumber].foreground);
@@ -78,7 +78,7 @@ void paused() {
 	outtextxy(46, 384, _T("PRESS ANY KEY TO CONTINUE"));
 }
 
-void gameOver(int length) {
+void Word::gameOver(int length) {
 	clearrectangle(0, 384, HORIZENTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
@@ -92,7 +92,7 @@ void gameOver(int length) {
 	outtextxy(120, 384, _T("PRESS SPACE TO REPLAY"));
 }
 
-void youWin() {
+void Word::youWin() {
 	smallFontsOutput(48, 16);
 	settextcolor(Theme[themeNumber].foreground);
 	setbkmode(TRANSPARENT);
@@ -100,7 +100,7 @@ void youWin() {
 	setbkmode(OPAQUE);
 }
 
-void statistics(int length) {
+void Word::statistics(int length) {
 	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
@@ -112,7 +112,7 @@ void statistics(int length) {
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
 }
 
-void welcome(Snake*& head) {
+void Complex::welcome(Snake*& head) {
 	setbkcolor(Theme[themeNumber].background);
 	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
 
@@ -170,7 +170,7 @@ void welcome(Snake*& head) {
 	}
 }
 
-void printMap() {
+void Complex::printMap() {
 	setfillcolor(Theme[themeNumber].foreground);
 	for (int i = 0; i < numberOfRow + 2; i++)
 		for (int j = 0; j < numberOfColumn + 2; j++)
@@ -184,7 +184,7 @@ void printMap() {
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
 }
 
-void visualSnake(Snake* head) {
+void Complex::visualSnake(Snake* head) {
 	int i = 0;
 	size_t size = Theme[themeNumber].accent.size();
 	for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
@@ -236,7 +236,7 @@ void visualSnake(Snake* head) {
 	}
 }
 
-void placeFruit(bool& fruitExists, Snake*& head) {
+void Complex::placeFruit(bool& fruitExists, Snake*& head) {
 	setfillcolor(Theme[themeNumber].foreground);
 	while (fruitExists == false) {
 		int tempRow = rand() % numberOfRow + 1;

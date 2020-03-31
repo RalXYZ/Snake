@@ -30,12 +30,23 @@ namespace drawRectangle {
 	void fruit(int y, int x);
 };
 
-void smallFontsOutput(int height, int width);
-void paused();
-void gameOver(int length);
-void youWin();
-void statistics(int length);
-void welcome(Snake*& head);
-void printMap();
-void visualSnake(Snake* tempBody);
-void placeFruit(bool& fruitExists, Snake*& head);
+class WordFormat {
+protected:
+	static void smallFontsOutput(int height, int width);
+};
+
+class Word : public WordFormat {
+public:
+	static void paused();
+	static void gameOver(int length);
+	static void youWin();
+	static void statistics(int length);
+};
+
+class Complex : public WordFormat {
+public:
+	static void welcome(Snake*& head);
+	static void printMap();
+	static void visualSnake(Snake* tempBody);
+	static void placeFruit(bool& fruitExists, Snake*& head);
+};

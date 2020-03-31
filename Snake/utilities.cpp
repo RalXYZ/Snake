@@ -2,8 +2,6 @@
 
 #include "utilities.h"
 
-
-
 void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& currentColumn) {
 	switch (quaternaryVector) {
 	case Directions::Right:

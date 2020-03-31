@@ -55,7 +55,7 @@ int main() {
 
 	mapInput(MapResource[mapNumber].mapMacro);
 
-	welcome(head);
+	Complex::welcome(head);
 
 	while (true) {
 		bool fruitEaten = false;
@@ -65,9 +65,9 @@ int main() {
 		if (_kbhit()) {
 			key = _getch();
 			if (key == ' ') {
-				paused();
+				Word::paused();
 				_getch();
-				statistics(length);
+				Word::statistics(length);
 			}
 			else if (key == -32)
 				headDirection = keyToQuaternary(headDirection, length);
@@ -76,7 +76,7 @@ int main() {
 		quaternaryToVector(headDirection, currentRow, currentColumn);
 
 		/*place food randomly until the food is not located on the Snake's body*/
-		placeFruit(fruitExists, head);
+		Complex::placeFruit(fruitExists, head);
 
 		/*detect what exists at the next position where the Snake's head locates*/
 		if (currentRow == fruitRow && currentColumn == fruitColumn) {
@@ -131,12 +131,12 @@ int main() {
 		oldBody = newBody;
 
 		/*place food randomly until the food is not located on the Snake's body*/
-		placeFruit(fruitExists, head);
+		Complex::placeFruit(fruitExists, head);
 
 		/*output*/
-		visualSnake(head);
+		Complex::visualSnake(head);
 		if (fruitEaten || firstLoop)
-			statistics(length);
+			Word::statistics(length);
 
 		/*judge game over*/
 		if (hitBody)
@@ -158,12 +158,12 @@ int main() {
 	/*judge win or loss after ending*/
 	if (length != numberOfRow * numberOfColumn) {
 		char key = '\0';
-		gameOver(length);
+		Word::gameOver(length);
 		while (key = _getch())
 			if (key == ' ')
 				main();
 	}
 	else
-		youWin();
+		Word::youWin();
 	return 0;
 }
