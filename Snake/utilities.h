@@ -1,11 +1,8 @@
 ﻿#pragma once 
 
-#include <cmath>
-#include <iostream>
-#include <conio.h>
 #include <easyx.h>
+#include <cmath>
 #include "macros.h"
-#include "resource.h"
 
 class Snake {
 public:

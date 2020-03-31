@@ -1,5 +1,3 @@
-﻿#pragma once
-
-#include "theme.h"
+﻿#include "theme.h"
 
 int themeNumber = 0;

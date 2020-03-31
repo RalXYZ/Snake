@@ -1,13 +1,8 @@
 ﻿#pragma once
 
 #include <easyx.h>
-#include <conio.h>
-#include <cmath>
-#include "macros.h"
-#include "theme.h"
 #include "macros.h"
 #include "utilities.h"
-#include "maps.h"
 
 extern int mapNumber;
 extern int length;
@@ -47,6 +42,6 @@ class Complex : public WordFormat {
 public:
 	static void welcome(Snake*& head);
 	static void printMap();
-	static void visualSnake(Snake* tempBody);
+	static void visualSnake(Snake* head);
 	static void placeFruit(bool& fruitExists, Snake*& head);
 };

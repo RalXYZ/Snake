@@ -1,13 +1,14 @@
 ﻿#include <ctime>
+#include <cmath>
 #include <cstdlib>
 #include <easyx.h>
-#include <windows.h>
 #include <conio.h>
 #include <thread>
 #include "resource.h"
 #include "utilities.h"
 #include "graphic.h"
 #include "maps.h"
+#include "theme.h"
 
 extern int themeNumber;
 extern int mapNumber;
@@ -21,8 +22,8 @@ DWORD timePerFrame;
 
 int main() {
 
-	/*create the seed for randoming*/
-	srand((unsigned)time(NULL));
+	/*create the seed for random*/
+	srand(unsigned(time(NULL)));
 
 	/*data initialization*/
 	themeNumber = rand() % ThemeSize;
@@ -39,12 +40,12 @@ int main() {
 	bool firstLoop = true;
 
 	/*linked list initialization*/
-	Snake* oldBody = new Snake;
+	auto oldBody = new Snake;
 	oldBody->x = spawnCurrent.spawnX;
 	oldBody->y = spawnCurrent.spawnY;
 	oldBody->next = nullptr;
-	Snake* head = oldBody;
-	Snake* tail = oldBody;
+	auto head = oldBody;
+	auto tail = oldBody;
 
 	/*window initialization*/
 	if (windowCreated == false) {
@@ -83,8 +84,10 @@ int main() {
 			++length;
 			fruitExists = false;
 			fruitEaten = true;
+			/* TODO
 			std::thread sound(eatSound);
 			sound.detach();
+			*/
 		}
 		else if (mapCurrent[currentColumn][currentRow] == 1) {
 			setfillcolor(Theme[themeNumber].accent.front());
@@ -112,7 +115,7 @@ int main() {
 		}
 
 		/*the movement of Snake*/
-		Snake* newBody = new Snake;
+		const auto newBody = new Snake;
 		newBody->x = currentRow;
 		newBody->y = currentColumn;
 		newBody->previous = nullptr;
@@ -120,7 +123,7 @@ int main() {
 		head = newBody;
 		oldBody->previous = newBody;
 		if (fruitEaten == false) {
-			Snake* temp = tail->previous;
+			const auto temp = tail->previous;
 			clearrectangle(tail->x * CUBE, tail->y * CUBE, tail->x * CUBE + CUBE, tail->y * CUBE + CUBE);
 			if (tail->previous != nullptr)
 				clearrectangle(tail->previous->x * CUBE, tail->previous->y * CUBE, tail->previous->x * CUBE + CUBE, tail->previous->y * CUBE + CUBE);
@@ -149,8 +152,8 @@ int main() {
 	}
 
 	/*prevent memory leak, delete the linked list of Snake*/
-	for (Snake* i = head; i != nullptr; ) {
-		Snake* temp = i->next;
+	for (auto i = head; i != nullptr; ) {
+		const auto temp = i->next;
 		delete i;
 		i = temp;
 	}

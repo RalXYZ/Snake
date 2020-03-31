@@ -1,6 +1,11 @@
-﻿#pragma once
-
-#include "graphic.h"
+﻿#include "graphic.h"
+#include <easyx.h>
+#include <conio.h>
+#include <cmath>
+#include "macros.h"
+#include "theme.h"
+#include "maps.h"
+#include <easyx.h>
 
 namespace drawRectangle {
 	void upRight(const int y, const int x) {
@@ -106,7 +111,7 @@ void Word::statistics(int length) {
 	wsprintf(s, L"%d", length);
 	smallFontsOutput(48, 18);
 	settextcolor(Theme[themeNumber].foreground);
-	outtextxy(164 - ((int)log10(length) + 1) * 9, 336, s);
+	outtextxy(164 - (int(log10(length)) + 1) * 9, 336, s);
 
 	smallFontsOutput(20, 8);
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
@@ -133,11 +138,11 @@ void Complex::welcome(Snake*& head) {
 	outtextxy(138, 342, _T("↓"));
 
 	while (true) {
-		char temp = _getch();
+		const char temp = _getch();
 		if (temp == ' ')
 			break;
 		else if (temp == -32) {
-			Keyboard direction = (Keyboard)_getch();
+			const auto direction = Keyboard(_getch());
 			if (direction == Keyboard::Up) {
 				if (themeNumber == 0)
 					themeNumber = ThemeSize - 1;
@@ -186,7 +191,7 @@ void Complex::printMap() {
 
 void Complex::visualSnake(Snake* head) {
 	int i = 0;
-	size_t size = Theme[themeNumber].accent.size();
+	const size_t size = Theme[themeNumber].accent.size();
 	for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
 		setfillcolor(Theme[themeNumber].accent.at(i % size));
 		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
@@ -239,8 +244,8 @@ void Complex::visualSnake(Snake* head) {
 void Complex::placeFruit(bool& fruitExists, Snake*& head) {
 	setfillcolor(Theme[themeNumber].foreground);
 	while (fruitExists == false) {
-		int tempRow = rand() % numberOfRow + 1;
-		int tempColumn = rand() % numberOfColumn + 1;
+		const int tempRow = rand() % numberOfRow + 1;
+		const int tempColumn = rand() % numberOfColumn + 1;
 		if (mapCurrent[tempColumn][tempRow] == 1)
 			continue;
 		for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {

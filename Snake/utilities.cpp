@@ -1,5 +1,9 @@
-﻿#pragma once
-
+﻿#include <iostream>
+#include <conio.h>
+#include <easyx.h>
+#include <cmath>
+#include "macros.h"
+#include "resource.h"
 #include "utilities.h"
 
 void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& currentColumn) {
@@ -20,8 +24,8 @@ void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& curre
 }
 
 Directions keyToQuaternary(Directions quaternaryVector, int length) {
-	Directions temp = quaternaryVector;
-	switch ((Keyboard)_getch()) {
+	auto temp = quaternaryVector;
+	switch (Keyboard(_getch())) {
 	case Keyboard::Right:
 		temp = Directions::Right;
 		break;
@@ -36,14 +40,14 @@ Directions keyToQuaternary(Directions quaternaryVector, int length) {
 		break;
 	}
 	if (length > 1) //the Snake should not reverse its orientation when its length is bigger than 1
-		if (((int)quaternaryVector - (int)temp) % 2 == 0)
+		if ((int(quaternaryVector) - int(temp)) % 2 == 0)
 			return quaternaryVector;
 	return temp;
 }
 
 void mapInput(int mapMacro) {
-	HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(mapMacro), "TEXT");
-	HGLOBAL hMemory = LoadResource(nullptr, hResource);
+	const HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(mapMacro), "TEXT");
+	const HGLOBAL hMemory = LoadResource(nullptr, hResource);
 	char* mapElement = (char*)LockResource(hMemory);
 	int str_size = SizeofResource(nullptr, hResource);
 	if (!hResource) {
@@ -60,6 +64,8 @@ void mapInput(int mapMacro) {
 	}
 }
 
+/* TODO
 void eatSound() {
 	//TODO find a proper sound fx
 }
+*/
