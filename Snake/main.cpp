@@ -6,7 +6,7 @@
 #include <thread>
 #include "resource.h"
 #include "utilities.h"
-#include "graphic.h"
+#include "display.h"
 #include "maps.h"
 #include "theme.h"
 
@@ -56,7 +56,7 @@ int main() {
 
 	mapInput(MapResource[mapNumber].mapMacro);
 
-	Complex::welcome(head);
+	DisplayComplex::welcome(head);
 
 	while (true) {
 		bool fruitEaten = false;
@@ -66,9 +66,9 @@ int main() {
 		if (_kbhit()) {
 			key = _getch();
 			if (key == ' ') {
-				Word::paused();
+				DisplayWord::paused();
 				_getch();
-				Word::statistics(length);
+				DisplayWord::statistics(length);
 			}
 			else if (key == -32)
 				headDirection = keyToQuaternary(headDirection, length);
@@ -77,7 +77,7 @@ int main() {
 		quaternaryToVector(headDirection, currentRow, currentColumn);
 
 		/*place food randomly until the food is not located on the Snake's body*/
-		Complex::placeFruit(fruitExists, head);
+		DisplayComplex::placeFruit(fruitExists, head);
 
 		/*detect what exists at the next position where the Snake's head locates*/
 		if (currentRow == fruitRow && currentColumn == fruitColumn) {
@@ -90,26 +90,12 @@ int main() {
 			*/
 		}
 		else if (mapCurrent[currentColumn][currentRow] == 1) {
-			setfillcolor(Theme[themeNumber].accent.front());
-			switch (headDirection) {
-			case Directions::Right:
-				drawRectangle::right(head->x, head->y);
-				break;
-			case Directions::Up:
-				drawRectangle::up(head->x, head->y);
-				break;
-			case Directions::Left:
-				drawRectangle::left(head->x, head->y);
-				break;
-			case Directions::Down:
-				drawRectangle::down(head->x, head->y);
-				break;
-			}
+			DisplayComplex::headStuck(head, headDirection);
 			hitWall = true;
 			break;
 		}
 		else {
-			for (Snake* tempBody = head; tempBody != tail; tempBody = tempBody->next)
+			for (auto tempBody = head; tempBody != tail; tempBody = tempBody->next)
 				if (tempBody->x == currentRow && tempBody->y == currentColumn)
 					hitBody = true;
 		}
@@ -134,12 +120,12 @@ int main() {
 		oldBody = newBody;
 
 		/*place food randomly until the food is not located on the Snake's body*/
-		Complex::placeFruit(fruitExists, head);
+		DisplayComplex::placeFruit(fruitExists, head);
 
 		/*output*/
-		Complex::visualSnake(head);
+		DisplayComplex::visualSnake(head);
 		if (fruitEaten || firstLoop)
-			Word::statistics(length);
+			DisplayWord::statistics(length);
 
 		/*judge game over*/
 		if (hitBody)
@@ -161,12 +147,12 @@ int main() {
 	/*judge win or loss after ending*/
 	if (length != numberOfRow * numberOfColumn) {
 		char key = '\0';
-		Word::gameOver(length);
+		DisplayWord::gameOver(length);
 		while (key = _getch())
 			if (key == ' ')
 				main();
 	}
 	else
-		Word::youWin();
+		DisplayWord::youWin();
 	return 0;
 }

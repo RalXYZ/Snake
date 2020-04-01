@@ -1,65 +1,62 @@
-﻿#include "graphic.h"
-#include <easyx.h>
+﻿#include <easyx.h>
 #include <conio.h>
 #include <cmath>
+#include "display.h"
 #include "macros.h"
 #include "theme.h"
 #include "maps.h"
-#include <easyx.h>
 
-namespace drawRectangle {
-	void upRight(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-	}
 
-	void upLeft(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
-		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-	}
+inline void DrawRectangle::upRight(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+}
 
-	void downRight(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-	}
+inline void DrawRectangle::upLeft(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+}
 
-	void downLeft(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
-		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-	}
+inline void DrawRectangle::downRight(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+}
 
-	void down(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
-	}
+inline void DrawRectangle::downLeft(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+}
 
-	void up(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
-	}
+inline void DrawRectangle::down(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 24);
+}
 
-	void right(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-	}
+inline void DrawRectangle::up(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
+}
 
-	void left(const int y, const int x) {
-		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-	}
+inline void DrawRectangle::right(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+}
 
-	void vertical(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 24);
-	}
+inline void DrawRectangle::left(const int y, const int x) {
+	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+}
 
-	void horizontal(const int y, const int x) {
-		solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
-	}
+inline void DrawRectangle::vertical(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 24);
+}
 
-	void dot(const int y, const int x) {
-		solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
-	}
+inline void DrawRectangle::horizontal(const int y, const int x) {
+	solidrectangle(y * CUBE + 0, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
+}
 
-	void fruit(const int y, const int x) {
-		solidrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
-	}
+inline void DrawRectangle::dot(const int y, const int x) {
+	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 18, x * CUBE + 18);
+}
 
+inline void DrawRectangle::fruit(const int y, const int x) {
+	solidrectangle(y * CUBE + 9, x * CUBE + 9, y * CUBE + 15, x * CUBE + 15);
 }
 
 void WordFormat::smallFontsOutput(const int height, const int width) {
@@ -73,7 +70,7 @@ void WordFormat::smallFontsOutput(const int height, const int width) {
 	settextstyle(&f);
 }
 
-void Word::paused() {
+void DisplayWord::paused() {
 	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
 	smallFontsOutput(48, 16);
 	settextcolor(Theme[themeNumber].foreground);
@@ -83,7 +80,7 @@ void Word::paused() {
 	outtextxy(46, 384, _T("PRESS ANY KEY TO CONTINUE"));
 }
 
-void Word::gameOver(int length) {
+void DisplayWord::gameOver(int length) {
 	clearrectangle(0, 384, HORIZENTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
@@ -97,7 +94,7 @@ void Word::gameOver(int length) {
 	outtextxy(120, 384, _T("PRESS SPACE TO REPLAY"));
 }
 
-void Word::youWin() {
+void DisplayWord::youWin() {
 	smallFontsOutput(48, 16);
 	settextcolor(Theme[themeNumber].foreground);
 	setbkmode(TRANSPARENT);
@@ -105,7 +102,7 @@ void Word::youWin() {
 	setbkmode(OPAQUE);
 }
 
-void Word::statistics(int length) {
+void DisplayWord::statistics(int length) {
 	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
@@ -117,13 +114,13 @@ void Word::statistics(int length) {
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
 }
 
-void Complex::welcome(Snake*& head) {
+void DisplayComplex::welcome(Snake*& head) {
 	setbkcolor(Theme[themeNumber].background);
 	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
 
 	printMap();
 	setfillcolor(Theme[themeNumber].accent.front());
-	drawRectangle::dot(head->x, head->y);
+	dot(head->x, head->y);
 
 	smallFontsOutput(20, 8);
 	settextcolor(Theme[themeNumber].foreground);
@@ -175,7 +172,7 @@ void Complex::welcome(Snake*& head) {
 	}
 }
 
-void Complex::printMap() {
+void DisplayComplex::printMap() {
 	setfillcolor(Theme[themeNumber].foreground);
 	for (int i = 0; i < numberOfRow + 2; i++)
 		for (int j = 0; j < numberOfColumn + 2; j++)
@@ -189,59 +186,59 @@ void Complex::printMap() {
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
 }
 
-void Complex::visualSnake(Snake* head) {
+void DisplayComplex::visualSnake(Snake* head) {
 	int i = 0;
 	const size_t size = Theme[themeNumber].accent.size();
 	for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
 		setfillcolor(Theme[themeNumber].accent.at(i % size));
 		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
 			if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
-				drawRectangle::vertical(tempBody->x, tempBody->y);
+				vertical(tempBody->x, tempBody->y);
 			else if (tempBody->y == tempBody->previous->y && tempBody->y == tempBody->next->y)
-				drawRectangle::horizontal(tempBody->x, tempBody->y);
+				horizontal(tempBody->x, tempBody->y);
 			else {
 				if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y + 1
 					|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y + 1)
-					drawRectangle::upLeft(tempBody->x, tempBody->y);
+					upLeft(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y - 1
 					|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y - 1)
-					drawRectangle::downRight(tempBody->x, tempBody->y);
+					downRight(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x + 1 && tempBody->y == tempBody->previous->y - 1
 					|| tempBody->x == tempBody->previous->x + 1 && tempBody->y == tempBody->next->y - 1)
-					drawRectangle::downLeft(tempBody->x, tempBody->y);
+					downLeft(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x - 1 && tempBody->y == tempBody->previous->y + 1
 					|| tempBody->x == tempBody->previous->x - 1 && tempBody->y == tempBody->next->y + 1)
-					drawRectangle::upRight(tempBody->x, tempBody->y);
+					upRight(tempBody->x, tempBody->y);
 			}
 		}
 		else if (tempBody->previous == nullptr && tempBody->next == nullptr)
-			drawRectangle::dot(tempBody->x, tempBody->y);
+			dot(tempBody->x, tempBody->y);
 		else {
 			if (tempBody->previous == nullptr) { //head
 				if (tempBody->x == tempBody->next->x + 1)
-					drawRectangle::left(tempBody->x, tempBody->y);
+					left(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->next->x - 1)
-					drawRectangle::right(tempBody->x, tempBody->y);
+					right(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->next->y + 1)
-					drawRectangle::up(tempBody->x, tempBody->y);
+					up(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->next->y - 1)
-					drawRectangle::down(tempBody->x, tempBody->y);
+					down(tempBody->x, tempBody->y);
 			}
 			if (tempBody->next == nullptr) { //tail
 				if (tempBody->x == tempBody->previous->x + 1)
-					drawRectangle::left(tempBody->x, tempBody->y);
+					left(tempBody->x, tempBody->y);
 				else if (tempBody->x == tempBody->previous->x - 1)
-					drawRectangle::right(tempBody->x, tempBody->y);
+					right(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->previous->y + 1)
-					drawRectangle::up(tempBody->x, tempBody->y);
+					up(tempBody->x, tempBody->y);
 				else if (tempBody->y == tempBody->previous->y - 1)
-					drawRectangle::down(tempBody->x, tempBody->y);
+					down(tempBody->x, tempBody->y);
 			}
 		}
 	}
 }
 
-void Complex::placeFruit(bool& fruitExists, Snake*& head) {
+void DisplayComplex::placeFruit(bool& fruitExists, Snake*& head) {
 	setfillcolor(Theme[themeNumber].foreground);
 	while (fruitExists == false) {
 		const int tempRow = rand() % numberOfRow + 1;
@@ -254,9 +251,27 @@ void Complex::placeFruit(bool& fruitExists, Snake*& head) {
 			if (tempBody->next == nullptr) {
 				fruitRow = tempRow;
 				fruitColumn = tempColumn;
-				drawRectangle::fruit(fruitRow, fruitColumn);
+				DrawRectangle::fruit(fruitRow, fruitColumn);
 				fruitExists = true;
 			}
 		}
+	}
+}
+
+void DisplayComplex::headStuck(Snake*& head, const Directions headDirection) {
+	setfillcolor(Theme[themeNumber].accent.front());
+	switch (headDirection) {
+	case Directions::Right:
+		right(head->x, head->y);
+		break;
+	case Directions::Up:
+		up(head->x, head->y);
+		break;
+	case Directions::Left:
+		left(head->x, head->y);
+		break;
+	case Directions::Down:
+		down(head->x, head->y);
+		break;
 	}
 }

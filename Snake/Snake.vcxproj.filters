@@ -30,7 +30,7 @@
     <ClInclude Include="maps.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="graphic.h">
+    <ClInclude Include="display.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -47,7 +47,7 @@
     <ClCompile Include="maps.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="graphic.cpp">
+    <ClCompile Include="display.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

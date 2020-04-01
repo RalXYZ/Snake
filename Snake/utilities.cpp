@@ -1,8 +1,6 @@
 ﻿#include <iostream>
 #include <conio.h>
 #include <easyx.h>
-#include <cmath>
-#include "macros.h"
 #include "resource.h"
 #include "utilities.h"
 
