@@ -71,7 +71,7 @@ void WordFormat::smallFontsOutput(const int height, const int width) {
 }
 
 void DisplayWord::paused() {
-	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
+	clearrectangle(0, 336, HORIZONTAL, VERTICAL);
 	smallFontsOutput(48, 16);
 	settextcolor(Theme[themeNumber].foreground);
 	outtextxy(54, 336, _T("GAME  PAUSED"));
@@ -80,8 +80,8 @@ void DisplayWord::paused() {
 	outtextxy(46, 384, _T("PRESS ANY KEY TO CONTINUE"));
 }
 
-void DisplayWord::gameOver(int length) {
-	clearrectangle(0, 384, HORIZENTAL, VERTICAL);
+void DisplayWord::gameOver(const int length) {
+	clearrectangle(0, 384, HORIZONTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
 	smallFontsOutput(48, 18);
@@ -102,8 +102,8 @@ void DisplayWord::youWin() {
 	setbkmode(OPAQUE);
 }
 
-void DisplayWord::statistics(int length) {
-	clearrectangle(0, 336, HORIZENTAL, VERTICAL);
+void DisplayWord::statistics(const int length) {
+	clearrectangle(0, 336, HORIZONTAL, VERTICAL);
 	wchar_t s[5];
 	wsprintf(s, L"%d", length);
 	smallFontsOutput(48, 18);
@@ -116,7 +116,7 @@ void DisplayWord::statistics(int length) {
 
 void DisplayComplex::welcome(Snake*& head) {
 	setbkcolor(Theme[themeNumber].background);
-	clearrectangle(0, 0, HORIZENTAL, VERTICAL);
+	clearrectangle(0, 0, HORIZONTAL, VERTICAL);
 
 	printMap();
 	setfillcolor(Theme[themeNumber].accent.front());

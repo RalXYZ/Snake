@@ -49,7 +49,7 @@ int main() {
 
 	/*window initialization*/
 	if (windowCreated == false) {
-		initgraph(HORIZENTAL, VERTICAL);
+		initgraph(HORIZONTAL, VERTICAL);
 		windowCreated = true;
 	}
 	setlinestyle(PS_NULL);
