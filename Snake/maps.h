@@ -2,18 +2,23 @@
 
 #include "macros.h"
 #include "resource.h"
+#include <vector>
 
-struct map {
-	map(int macro) {
-		this->mapMacro = macro;
-	}
+class Map {
+public:
+	unsigned int number;
+	unsigned int spawnNumber;
+
+	std::vector<int> resource = { IDR_MAP00, IDR_MAP01, IDR_MAP02, IDR_MAP03, IDR_MAP04, IDR_MAP05, IDR_MAP06 };
+
 	struct {
-		int spawnX;
-		int spawnY;
+		int x;
+		int y;
 		Directions headDirection;
-	} spawn[4] = { {1, 1, Directions::Right}, {1, 12, Directions::Up}, {12, 12, Directions::Left}, {12, 1, Directions::Down} };
-	int mapMacro;
+	} spawnProperties[4] = { {1, 1, Directions::Right}, {1, 12, Directions::Up}, {12, 12, Directions::Left}, {12, 1, Directions::Down} };
+
+	Map();
 };
 
-const map MapResource[]{ (IDR_MAP00), (IDR_MAP01), (IDR_MAP02), (IDR_MAP03), (IDR_MAP04), (IDR_MAP05), (IDR_MAP06) };
-const int MapResourceSize = sizeof(MapResource) / sizeof(*MapResource);
+//const Map MapResource[]{ (IDR_MAP00), (IDR_MAP01), (IDR_MAP02), (IDR_MAP03), (IDR_MAP04), (IDR_MAP05), (IDR_MAP06) };
+//const int MapResourceSize = sizeof(MapResource) / sizeof(*MapResource);

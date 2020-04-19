@@ -2,8 +2,9 @@
 
 #include "macros.h"
 #include "utilities.h"
+#include "maps.h"
 
-extern int mapNumber;
+//extern int mapNumber;
 extern int length;
 extern int themeNumber;
 extern int numberOfRow, numberOfColumn;
@@ -40,7 +41,7 @@ public:
 
 class DisplayComplex : public WordFormat, public DrawRectangle {
 public:
-	static void welcome(Snake*& head);
+	static void welcome(Snake*& head, Map& Map);
 	static void printMap();
 	static void visualSnake(Snake* head);
 	static void placeFruit(bool& fruitExists, Snake*& head);

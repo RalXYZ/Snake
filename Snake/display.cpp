@@ -7,6 +7,7 @@
 #include "maps.h"
 
 
+
 inline void DrawRectangle::upRight(const int y, const int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);
@@ -114,7 +115,7 @@ void DisplayWord::statistics(const int length) {
 	outtextxy(72, 384, _T("PRESS SPACE TO PAUSE"));
 }
 
-void DisplayComplex::welcome(Snake*& head) {
+void DisplayComplex::welcome(Snake*& head, Map& Map) {
 	setbkcolor(Theme[themeNumber].background);
 	clearrectangle(0, 0, HORIZONTAL, VERTICAL);
 
@@ -135,37 +136,37 @@ void DisplayComplex::welcome(Snake*& head) {
 	outtextxy(138, 342, _T("↓"));
 
 	while (true) {
-		const char temp = _getch();
+		const char temp = char(_getch());
 		if (temp == ' ')
 			break;
-		else if (temp == -32) {
+		if (temp == -32) {
 			const auto direction = Keyboard(_getch());
 			if (direction == Keyboard::Up) {
 				if (themeNumber == 0)
 					themeNumber = ThemeSize - 1;
 				else
 					--themeNumber;
-				welcome(head);
+				welcome(head, Map);
 				break;
 			}
-			else if (direction == Keyboard::Down) {
+			if (direction == Keyboard::Down) {
 				(++themeNumber) %= ThemeSize;
-				welcome(head);
+				welcome(head, Map);
 				break;
 			}
-			else if (direction == Keyboard::Left) {
-				if (mapNumber == 0)
-					mapNumber = MapResourceSize - 1;
+			if (direction == Keyboard::Left) {
+				if (Map.number == 0)
+					Map.number = Map.resource.size() - 1;
 				else
-					--mapNumber;
-				mapInput(MapResource[mapNumber].mapMacro);
-				welcome(head);
+					--Map.number;
+				mapInput(Map.resource[Map.number]);
+				welcome(head, Map);
 				break;
 			}
-			else if (direction == Keyboard::Right) {
-				(++mapNumber) %= MapResourceSize;
-				mapInput(MapResource[mapNumber].mapMacro);
-				welcome(head);
+			if (direction == Keyboard::Right) {
+				(++Map.number) %= Map.resource.size();
+				mapInput(Map.resource[Map.number]);
+				welcome(head, Map);
 				break;
 			}
 		}
@@ -174,22 +175,22 @@ void DisplayComplex::welcome(Snake*& head) {
 
 void DisplayComplex::printMap() {
 	setfillcolor(Theme[themeNumber].foreground);
-	for (int i = 0; i < numberOfRow + 2; i++)
-		for (int j = 0; j < numberOfColumn + 2; j++)
+	for (auto i = 0; i < numberOfRow + 2; i++)
+		for (auto j = 0; j < numberOfColumn + 2; j++)
 			if (mapCurrent[i][j] == 1)
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
 
 	setfillcolor(Theme[themeNumber].background);
-	for (int i = 0; i < numberOfRow + 2; i++)
-		for (int j = 0; j < numberOfColumn + 2; j++)
+	for (auto i = 0; i < numberOfRow + 2; i++)
+		for (auto j = 0; j < numberOfColumn + 2; j++)
 			if (mapCurrent[i][j] == 0)
 				solidrectangle(j * CUBE, i * CUBE, j * CUBE + CUBE, i * CUBE + CUBE);
 }
 
 void DisplayComplex::visualSnake(Snake* head) {
-	int i = 0;
-	const size_t size = Theme[themeNumber].accent.size();
-	for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
+	auto i = 0;
+	const auto size = Theme[themeNumber].accent.size();
+	for (auto tempBody = head; tempBody != nullptr; tempBody = tempBody->next, i++) {
 		setfillcolor(Theme[themeNumber].accent.at(i % size));
 		if (tempBody->previous != nullptr && tempBody->next != nullptr) {
 			if (tempBody->x == tempBody->previous->x && tempBody->x == tempBody->next->x)
@@ -241,17 +242,17 @@ void DisplayComplex::visualSnake(Snake* head) {
 void DisplayComplex::placeFruit(bool& fruitExists, Snake*& head) {
 	setfillcolor(Theme[themeNumber].foreground);
 	while (fruitExists == false) {
-		const int tempRow = rand() % numberOfRow + 1;
-		const int tempColumn = rand() % numberOfColumn + 1;
+		const auto tempRow = rand() % numberOfRow + 1;
+		const auto tempColumn = rand() % numberOfColumn + 1;
 		if (mapCurrent[tempColumn][tempRow] == 1)
 			continue;
-		for (Snake* tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
+		for (auto tempBody = head; tempBody != nullptr; tempBody = tempBody->next) {
 			if (tempBody->x == tempRow && tempBody->y == tempColumn)
 				break;
 			if (tempBody->next == nullptr) {
 				fruitRow = tempRow;
 				fruitColumn = tempColumn;
-				DrawRectangle::fruit(fruitRow, fruitColumn);
+				fruit(fruitRow, fruitColumn);
 				fruitExists = true;
 			}
 		}

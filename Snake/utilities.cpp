@@ -44,16 +44,16 @@ Directions keyToQuaternary(Directions quaternaryVector, int length) {
 }
 
 void mapInput(int mapMacro) {
-	const HRSRC hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(mapMacro), "TEXT");
-	const HGLOBAL hMemory = LoadResource(nullptr, hResource);
-	char* mapElement = (char*)LockResource(hMemory);
-	int str_size = SizeofResource(nullptr, hResource);
+	const auto hResource = FindResourceA(nullptr, MAKEINTRESOURCEA(mapMacro), "TEXT");
+	const auto hMemory = LoadResource(nullptr, hResource);
+	auto mapElement = (char*)LockResource(hMemory);
+	//int str_size = SizeofResource(nullptr, hResource);
 	if (!hResource) {
 		std::cout << "Unable to load map file! " << mapMacro;
 		exit(1);
 	}
-	for (int i = 0; i < 14; i++) {
-		for (int j = 0; j < 14; j++) {
+	for (auto i = 0; i < 14; i++) {
+		for (auto j = 0; j < 14; j++) {
 			mapCurrent[i][j] = *mapElement - '0';
 			mapElement++;
 		}

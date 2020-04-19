@@ -11,8 +11,8 @@
 #include "theme.h"
 
 extern int themeNumber;
-extern int mapNumber;
-extern int spawnNumber;
+//extern int mapNumber;
+//extern int spawnNumber;
 
 bool windowCreated = false;
 int mapCurrent[LENGTH + 2][LENGTH + 2];
@@ -21,28 +21,29 @@ int fruitRow, fruitColumn;
 DWORD timePerFrame;
 
 int main() {
-
 	/*create the seed for random*/
-	srand(unsigned(time(NULL)));
+	srand(unsigned(time(nullptr)));
+
+	Map Map;
 
 	/*data initialization*/
 	themeNumber = rand() % ThemeSize;
-	mapNumber = rand() % MapResourceSize;
-	spawnNumber = rand() % 4;
-	auto spawnCurrent = MapResource[mapNumber].spawn[spawnNumber];
-	Directions headDirection = spawnCurrent.headDirection;
-	int currentRow = spawnCurrent.spawnX,
-		currentColumn = spawnCurrent.spawnY;
-	int length = 1;
-	bool fruitExists = false;
-	bool hitBody = false;
-	bool hitWall = false;
-	bool firstLoop = true;
+	//mapNumber = rand() % MapResourceSize;
+	//spawnNumber = rand() % 4;
+	//auto spawnCurrent = MapResource[mapNumber].spawn[spawnNumber];
+	auto headDirection = Map.spawnProperties[Map.spawnNumber].headDirection;
+	auto currentRow = Map.spawnProperties[Map.spawnNumber].x,
+		currentColumn = Map.spawnProperties[Map.spawnNumber].y;
+	auto length = 1;
+	auto fruitExists = false;
+	auto hitBody = false;
+	auto hitWall = false; //Currently unused
+	auto firstLoop = true;
 
 	/*linked list initialization*/
 	auto oldBody = new Snake;
-	oldBody->x = spawnCurrent.spawnX;
-	oldBody->y = spawnCurrent.spawnY;
+	oldBody->x = Map.spawnProperties[Map.spawnNumber].x;
+	oldBody->y = Map.spawnProperties[Map.spawnNumber].y;
 	oldBody->next = nullptr;
 	auto head = oldBody;
 	auto tail = oldBody;
@@ -54,17 +55,17 @@ int main() {
 	}
 	setlinestyle(PS_NULL);
 
-	mapInput(MapResource[mapNumber].mapMacro);
+	mapInput(Map.resource.at(Map.number));
 
-	DisplayComplex::welcome(head);
+	DisplayComplex::welcome(head, Map);
 
 	while (true) {
-		bool fruitEaten = false;
+		auto fruitEaten = false;
 
 		/*detect user keyboard input, pause or go, and judge the next location of the Snake's head based on it*/
-		char key = '\0';
+		auto key = '\0';
 		if (_kbhit()) {
-			key = _getch();
+			key = char(_getch());
 			if (key == ' ') {
 				DisplayWord::paused();
 				_getch();
@@ -146,9 +147,9 @@ int main() {
 
 	/*judge win or loss after ending*/
 	if (length != numberOfRow * numberOfColumn) {
-		char key = '\0';
+		auto key = '\0';
 		DisplayWord::gameOver(length);
-		while (key = _getch())
+		while (key = char(_getch()))
 			if (key == ' ')
 				main();
 	}
