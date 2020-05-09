@@ -10,9 +10,7 @@
 #include "maps.h"
 #include "theme.h"
 
-extern int themeNumber;
-//extern int mapNumber;
-//extern int spawnNumber;
+//extern int themeNumber;
 
 bool windowCreated = false;
 int mapCurrent[LENGTH + 2][LENGTH + 2];
@@ -28,9 +26,6 @@ int main() {
 
 	/*data initialization*/
 	themeNumber = rand() % ThemeSize;
-	//mapNumber = rand() % MapResourceSize;
-	//spawnNumber = rand() % 4;
-	//auto spawnCurrent = MapResource[mapNumber].spawn[spawnNumber];
 	auto headDirection = Map.spawnProperties[Map.spawnNumber].headDirection;
 	auto currentRow = Map.spawnProperties[Map.spawnNumber].x,
 		currentColumn = Map.spawnProperties[Map.spawnNumber].y;

@@ -6,8 +6,6 @@
 #include "theme.h"
 #include "maps.h"
 
-
-
 inline void DrawRectangle::upRight(const int y, const int x) {
 	solidrectangle(y * CUBE + 6, x * CUBE + 0, y * CUBE + 18, x * CUBE + 18);
 	solidrectangle(y * CUBE + 6, x * CUBE + 6, y * CUBE + 24, x * CUBE + 18);

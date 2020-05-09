@@ -15,7 +15,6 @@ public:
 extern int numberOfRow, numberOfColumn;
 extern int fruitRow, fruitColumn;
 extern int themeNumber;
-extern int themeNumber;
 extern int mapCurrent[LENGTH + 2][LENGTH + 2];
 
 void quaternaryToVector(Directions quaternaryVector, int& currentRow, int& currentColumn);

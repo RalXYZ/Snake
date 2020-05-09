@@ -4,7 +4,6 @@
 #include "utilities.h"
 #include "maps.h"
 
-//extern int mapNumber;
 extern int length;
 extern int themeNumber;
 extern int numberOfRow, numberOfColumn;
