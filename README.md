@@ -23,7 +23,7 @@ This is an implementation of the classic Nokia brick phone game **Snake(贪吃�
 - [ ] Difficulty selection window
 
 ## Design
-The following details the 10 themes and 7 maps built into the game, designed by `Sunflower`.
+The following details the 10 themes and 7 maps built into the game, designed by [@TheSaint-LazareStation](https://github.com/TheSaint-LazareStation).
 
 ### Maps
 | Capture | Plug | Dice | Lucky Clover | Shell |
